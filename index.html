@@ -579,7 +579,7 @@
   setInterval(updateDate, 30000);
 
   // Load stock list — supports both array [] and {files:[]} formats
-  fetch('/stocks.json')
+  fetch('./stocks.json')
     .then(r => r.json())
     .then(data => {
       // Support both formats
@@ -606,7 +606,7 @@
         const li = document.createElement('li');
         li.style.animationDelay = `${i * 60}ms`;
         li.innerHTML = `
-          <a href="/stocks/${file}">
+          <a href="./stocks/${file}">
             <div class="entry-left">
               <span class="entry-date-badge">${date}</span>
               <span class="entry-title">股市摘要</span>
@@ -624,5 +624,6 @@
 </script>
 </body>
 </html>
-< ! - -   2 0 2 6 - 0 4 - 1 0   - - >  
+< ! - -   2 0 2 6 - 0 4 - 1 0   - - > 
+ 
  
