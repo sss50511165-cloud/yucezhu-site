@@ -602,11 +602,11 @@
       }
 
       sorted.forEach((file, i) => {
-        const date = file.replace('.html', '');
+        const date = file.replace('.json', '').replace('.html', '');
         const li = document.createElement('li');
         li.style.animationDelay = `${i * 60}ms`;
         li.innerHTML = `
-          <a href="./stocks/${file}">
+          <a href="./stocks/viewer.html?d=${date}">
             <div class="entry-left">
               <span class="entry-date-badge">${date}</span>
               <span class="entry-title">股市摘要</span>
