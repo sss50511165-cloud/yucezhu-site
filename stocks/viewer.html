@@ -5,440 +5,669 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>股市摘要 — 雲端知識誌</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #08090d;
     --surface: #0f1117;
-    --surface2: #13151f;
-    --border: #1a1d2c;
-    --border2: #252840;
+    --surface2: #161820;
+    --border: #1e2130;
     --gold: #c9a84c;
     --gold-light: #f0c96a;
-    --gold-dim: rgba(201,168,76,0.08);
-    --gold-dim2: rgba(201,168,76,0.15);
+    --gold-dim: rgba(201,168,76,0.12);
     --up: #3dd68c;
-    --down: #f04438;
-    --text: #e2e4f0;
-    --muted: #5a6080;
-    --dim: #2a2d40;
+    --down: #f0644a;
+    --warn-y: #f5c842;
+    --warn-o: #f59b42;
+    --text: #e8e9ef;
+    --text-muted: #6b7190;
+    --text-dim: #3a3f5c;
   }
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Noto Sans TC', sans-serif;
     font-weight: 300;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  body::after {
+  body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 999;
-    opacity: 0.5;
+    z-index: 0;
+    opacity: 0.6;
   }
 
-  /* HEADER */
-  header {
-    padding: 0 32px;
-    border-bottom: 1px solid var(--border);
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── NAV ── */
+  .top-nav {
+    padding: 20px 0 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 64px;
+    gap: 8px;
   }
-  .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-  .logo-mark {
-    width: 32px; height: 32px;
-    border: 1px solid var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-  }
-  .logo-mark::before { content: ''; position: absolute; inset: 3px; background: var(--gold-dim2); }
-  .logo-mark span { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; color: var(--gold); position: relative; }
-  .logo-text { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--text); letter-spacing: 0.02em; }
   .back-link {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
     text-decoration: none;
-    display: flex; align-items: center; gap: 6px;
     transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .back-link:hover { color: var(--gold); }
+  .nav-sep { font-family: monospace; color: var(--text-dim); }
 
-  /* WRAPPER */
-  .wrap {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 48px 32px 80px;
+  /* ── HEADER ── */
+  header {
+    padding: 40px 0 36px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+    animation: fadeUp 0.7s ease both;
   }
 
-  /* DATE BADGE */
-  .date-badge {
+  .header-eyebrow {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
   }
-  .date-badge::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
 
-  /* SUMMARY HEADLINE */
-  .summary-text {
+  header h1 {
     font-family: 'DM Serif Display', serif;
-    font-size: clamp(24px, 4vw, 38px);
-    line-height: 1.2;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1;
     color: var(--text);
-    margin-bottom: 40px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 32px;
+    font-weight: 400;
   }
 
-  /* SECTION */
-  .section { margin-bottom: 40px; }
+  header h1 span { color: var(--gold); font-style: italic; }
+
+  .header-meta { text-align: right; }
+
+  .header-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 2;
+  }
+
+  .live-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    background: var(--up);
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+  }
+
+  /* ── SUMMARY BANNER ── */
+  .summary-banner {
+    margin: 24px 0 0;
+    padding: 16px 20px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--gold-light);
+    line-height: 1.6;
+    animation: fadeUp 0.7s 0.05s ease both;
+  }
+
+  /* ── INDEX STRIP ── */
+  .index-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin: 28px 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  .index-card {
+    background: var(--surface);
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .index-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.9s 0.4s ease;
+  }
+
+  .index-card.up-card::after  { background: var(--up); }
+  .index-card.down-card::after { background: var(--down); }
+  .index-card.loaded::after   { transform: scaleX(1); }
+
+  .index-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .index-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .index-value.up   { color: var(--up); }
+  .index-value.down { color: var(--down); }
+
+  .index-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ── SECTION ── */
+  section {
+    margin-top: 48px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  section:nth-child(3) { animation-delay: 0.15s; }
+  section:nth-child(4) { animation-delay: 0.20s; }
+  section:nth-child(5) { animation-delay: 0.25s; }
+  section:nth-child(6) { animation-delay: 0.30s; }
+  section:nth-child(7) { animation-delay: 0.35s; }
+
   .section-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  /* INDEX TABLE */
-  .index-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
     gap: 12px;
   }
-  .index-card {
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── EVENT CARDS ── */
+  .events-grid { display: grid; gap: 2px; }
+
+  .event-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 20px 18px;
+    border-radius: 3px;
+    overflow: hidden;
+    transition: border-color 0.2s;
   }
-  .index-name {
+
+  .event-item:hover { border-color: rgba(201,168,76,0.3); }
+  .event-item:hover .event-icon-col { background: var(--gold-dim); }
+
+  .event-icon-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: var(--surface2);
+    transition: background 0.2s;
+  }
+
+  .event-body { padding: 14px 18px; }
+
+  .event-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .event-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .event-meta {
+    margin-top: 6px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    margin-bottom: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
   }
-  .index-val {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 22px;
-    font-weight: 600;
-  }
-  .index-val.up { color: var(--up); }
-  .index-val.down { color: var(--down); }
 
-  /* TW BLOCK */
-  .tw-block {
+  /* ── TW STOCK ── */
+  .tw-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .tw-main {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 24px;
-  }
-  .tw-main { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
-  .tw-pts {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--up);
-  }
-  .tw-pts.down { color: var(--down); }
-  .tw-change {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    color: var(--up);
-  }
-  .tw-change.down { color: var(--down); }
-  .tw-note { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
-  .sector-list { display: flex; flex-wrap: wrap; gap: 8px; }
-  .sector-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    color: var(--gold);
-    background: var(--gold-dim);
-    border: 1px solid var(--gold-dim2);
-    border-radius: 2px;
-    padding: 4px 12px;
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 32px;
   }
 
-  /* EVENT CARDS */
-  .events-list { display: grid; gap: 10px; }
-  .event-card {
+  .tw-big-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .tw-big-num.up   { color: var(--up); }
+  .tw-big-num.down { color: var(--down); }
+
+  .tw-big-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .tw-divider {
+    width: 1px;
+    height: 60px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  .tw-sub-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.9;
+  }
+
+  .tw-sub-text strong { color: var(--text); font-weight: 500; }
+
+  .sector-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 18px 20px;
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
   }
-  .event-card:hover { border-color: var(--border2); }
-  .event-icon { font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
-  .event-body { flex: 1; }
-  .event-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
-  .event-detail { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 8px; }
-  .event-meta { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 0.08em; }
 
-  /* RISK LIST */
-  .risk-list { display: grid; gap: 8px; }
+  .sector-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold);
+    position: absolute;
+    top: 14px; right: 18px;
+    opacity: 0.15;
+  }
+
+  .sector-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    padding-right: 32px;
+  }
+
+  .sector-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── RISK ── */
+  .risk-list { display: grid; gap: 10px; }
+
   .risk-item {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    background: rgba(240,68,56,0.06);
-    border: 1px solid rgba(240,68,56,0.2);
-    border-radius: 4px;
-    padding: 14px 16px;
-    font-size: 14px;
-    color: #f7a09a;
-    line-height: 1.6;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    border-left: 3px solid transparent;
   }
-  .risk-item::before { content: '⚠'; flex-shrink: 0; }
 
-  /* TOMORROW LIST */
+  .risk-item:nth-child(odd)  { border-left-color: var(--warn-y); }
+  .risk-item:nth-child(even) { border-left-color: var(--warn-o); }
+
+  .risk-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .risk-item:nth-child(odd) .risk-dot  { background: var(--warn-y); }
+  .risk-item:nth-child(even) .risk-dot { background: var(--warn-o); }
+
+  .risk-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  /* ── TOMORROW ── */
   .tomorrow-list { display: grid; gap: 8px; }
+
   .tomorrow-item {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
+    gap: 14px;
+    padding: 14px 18px;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 14px 16px;
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.6;
+    border-radius: 3px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
   }
-  .tomorrow-item::before { content: '→'; color: var(--gold); flex-shrink: 0; font-family: monospace; }
 
-  /* SOURCES */
-  .sources-row {
+  .tomorrow-arrow {
+    color: var(--gold);
+    font-family: monospace;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    animation: fadeUp 0.7s 0.4s ease both;
   }
+
+  .footer-sources { display: flex; flex-wrap: wrap; gap: 8px; }
+
   .source-chip {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.08em;
-    color: var(--muted);
-    background: var(--surface2);
+    color: var(--text-muted);
     border: 1px solid var(--border);
     border-radius: 2px;
     padding: 4px 10px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
   }
 
-  /* GENERATED */
-  .generated {
+  .source-chip:hover { border-color: var(--gold); color: var(--gold); }
+
+  .footer-right {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
-    color: var(--dim);
-    letter-spacing: 0.1em;
-    margin-top: 12px;
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 20px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .footer-left { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--dim); }
-  .footer-right { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--dim); }
-
-  /* ERROR */
-  .error-box {
-    background: var(--surface);
-    border: 1px dashed var(--border2);
-    border-radius: 4px;
-    padding: 48px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 14px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-align: right;
     line-height: 2;
   }
 
-  /* LOADING */
-  .loading {
+  /* ── ERROR / LOADING ── */
+  .center-msg {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
-    color: var(--muted);
+    justify-content: center;
+    min-height: 50vh;
+    gap: 16px;
+    color: var(--text-muted);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.1em;
-    padding: 48px 0;
-    justify-content: center;
   }
-  .loading-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: blink 1s infinite; }
+  .loading-dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+  }
+  .err-link { color: var(--gold); text-decoration: none; }
+  .err-link:hover { text-decoration: underline; }
 
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-  .fade-in { animation: fadeUp 0.5s ease both; }
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
 
-  @media(max-width:600px) {
-    header { padding: 0 16px; }
-    .wrap { padding: 32px 16px 60px; }
-    .index-grid { grid-template-columns: 1fr; }
-    footer { padding: 16px; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .index-strip { grid-template-columns: 1fr; }
+    .tw-grid { grid-template-columns: 1fr; }
+    .tw-main { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .tw-divider { width: 60px; height: 1px; }
+    header { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; }
   }
 </style>
 </head>
 <body>
+<div class="page-wrap">
 
-<header>
-  <a class="logo" href="../">
-    <div class="logo-mark"><span>誌</span></div>
-    <span class="logo-text">雲端知識誌</span>
-  </a>
-  <a class="back-link" href="../">← 返回首頁</a>
-</header>
+  <div class="top-nav">
+    <a class="back-link" href="../">← 雲端知識誌</a>
+    <span class="nav-sep">/</span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--text-dim)" id="nav-date">—</span>
+  </div>
 
-<div class="wrap" id="content">
-  <div class="loading"><div class="loading-dot"></div><span>載入摘要中...</span></div>
+  <div id="main-content">
+    <div class="center-msg">
+      <div class="loading-dot"></div>
+      <span>載入摘要中...</span>
+    </div>
+  </div>
+
 </div>
 
-<footer>
-  <div class="footer-left">© 2026 雲端知識誌 · 每日自動更新</div>
-  <div class="footer-right">POWERED BY CLAUDE · HOSTED ON GITHUB PAGES</div>
-</footer>
-
 <script>
-  // Get date from URL: ?d=2026-04-10
   const params = new URLSearchParams(location.search);
   const date = params.get('d');
 
   if (!date) {
-    document.getElementById('content').innerHTML =
-      '<div class="error-box">未指定日期<br><a href="../" style="color:var(--gold)">← 返回首頁</a></div>';
+    document.getElementById('main-content').innerHTML =
+      '<div class="center-msg"><span>未指定日期</span><a class="err-link" href="../">← 返回首頁</a></div>';
   } else {
+    document.getElementById('nav-date').textContent = date;
+    document.title = `股市摘要 ${date} — 雲端知識誌`;
     fetch(`./${date}.json`)
-      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(r => { if (!r.ok) throw r.status; return r.json(); })
       .then(render)
       .catch(() => {
-        document.getElementById('content').innerHTML =
-          `<div class="error-box">找不到 ${date} 的摘要資料<br><a href="../" style="color:var(--gold)">← 返回首頁</a></div>`;
+        document.getElementById('main-content').innerHTML =
+          `<div class="center-msg"><span>找不到 ${date} 的資料</span><a class="err-link" href="../">← 返回首頁</a></div>`;
       });
   }
 
-  function pct(val) {
-    if (!val) return { cls: '', text: val || '—' };
-    const up = val.startsWith('+');
-    const down = val.startsWith('-');
-    return { cls: up ? 'up' : down ? 'down' : '', text: val };
+  function arrow(val) {
+    if (!val) return '';
+    return val.startsWith('+') ? '▲ ' : val.startsWith('-') ? '▼ ' : '';
   }
 
-  function render(d) {
-    document.title = `股市摘要 ${d.date} — 雲端知識誌`;
+  function isUp(val)   { return val && val.startsWith('+'); }
+  function isDown(val) { return val && val.startsWith('-'); }
 
+  function render(d) {
     const us = d.us || {};
     const tw = d.tw || {};
-    const events = d.events || [];
-    const risks = d.risks || [];
+    const events  = d.events  || [];
+    const risks   = d.risks   || [];
     const tomorrow = d.tomorrow || [];
     const sources = d.sources || [];
+    const sectors = tw.sectors || [];
 
-    const dow = pct(us.dow), sp = pct(us.sp500), nas = pct(us.nasdaq);
-    const twChange = pct(tw.change);
-    const twDown = tw.change && tw.change.startsWith('-');
+    // ── Index cards ──
+    const indices = [
+      { name: 'Dow Jones',  val: us.dow,    desc: '道瓊工業指數' },
+      { name: 'Nasdaq',     val: us.nasdaq, desc: '納斯達克綜合' },
+      { name: 'S&P 500',   val: us.sp500,  desc: '標準普爾五百' },
+    ];
 
+    const indexHtml = indices.map(idx => {
+      const up = isUp(idx.val), dn = isDown(idx.val);
+      const cls = up ? 'up-card' : dn ? 'down-card' : '';
+      const valCls = up ? 'up' : dn ? 'down' : '';
+      return `
+        <div class="index-card ${cls}">
+          <div class="index-name">${idx.name}</div>
+          <div class="index-value ${valCls}">${arrow(idx.val)}${idx.val || '—'}</div>
+          <div class="index-desc">${idx.desc}</div>
+        </div>`;
+    }).join('');
+
+    // ── Events ──
     const evHtml = events.map(e => `
-      <div class="event-card">
-        <div class="event-icon">${e.icon || '📌'}</div>
+      <div class="event-item">
+        <div class="event-icon-col">${e.icon || '📌'}</div>
         <div class="event-body">
           <div class="event-title">${e.title}</div>
           <div class="event-detail">${e.detail}</div>
-          <div class="event-meta">${e.meta || ''}</div>
+          ${e.meta ? `<div class="event-meta">${e.meta}</div>` : ''}
         </div>
       </div>`).join('');
 
-    const riskHtml = risks.map(r => `<div class="risk-item">${r}</div>`).join('');
-    const tmrHtml = tomorrow.map(t => `<div class="tomorrow-item">${t}</div>`).join('');
-    const srcHtml = sources.map(s => `<span class="source-chip">${s}</span>`).join('');
-    const sectorHtml = (tw.sectors || []).map(s => `<span class="sector-tag">${s}</span>`).join('');
+    // ── TW sectors ──
+    const sectorHtml = sectors.map((s, i) => `
+      <div class="sector-card">
+        <div class="sector-num">0${i + 1}</div>
+        <div class="sector-name">${s}</div>
+      </div>`).join('');
 
-    document.getElementById('content').innerHTML = `
-      <div class="fade-in">
-        <div class="date-badge">${d.date} · 股市摘要</div>
-        <div class="summary-text">${d.summary || ''}</div>
+    // ── Risks ──
+    const riskHtml = risks.map(r => `
+      <div class="risk-item">
+        <div class="risk-dot"></div>
+        <div class="risk-text">${r}</div>
+      </div>`).join('');
 
-        <div class="section">
-          <div class="section-label">🇺🇸 美股三大指數</div>
-          <div class="index-grid">
-            <div class="index-card">
-              <div class="index-name">DOW JONES</div>
-              <div class="index-val ${dow.cls}">${dow.text}</div>
-            </div>
-            <div class="index-card">
-              <div class="index-name">S&amp;P 500</div>
-              <div class="index-val ${sp.cls}">${sp.text}</div>
-            </div>
-            <div class="index-card">
-              <div class="index-name">NASDAQ</div>
-              <div class="index-val ${nas.cls}">${nas.text}</div>
-            </div>
+    // ── Tomorrow ──
+    const tmrHtml = tomorrow.map(t => `
+      <div class="tomorrow-item">
+        <span class="tomorrow-arrow">→</span>
+        <span>${t}</span>
+      </div>`).join('');
+
+    // ── Sources ──
+    const srcHtml = sources.map(s =>
+      `<span class="source-chip">${s}</span>`).join('');
+
+    const twUp = isUp(tw.change);
+    const twDn = isDown(tw.change);
+    const twNumCls = twUp ? 'up' : twDn ? 'down' : '';
+
+    document.getElementById('main-content').innerHTML = `
+
+      <header>
+        <div>
+          <div class="header-eyebrow">Financial Insights · Market Summary</div>
+          <h1>股市摘要<br><span>${d.date || date}</span></h1>
+        </div>
+        <div class="header-meta">
+          <div class="header-date">
+            <span class="live-dot"></span>UTC+8<br>
+            ${d.generated ? `產出時間<br>${d.generated}<br><br>` : ''}
+            ${sources.slice(0,3).join(' · ')}
           </div>
         </div>
+      </header>
 
-        <div class="section">
-          <div class="section-label">🇹🇼 台股加權指數</div>
-          <div class="tw-block">
-            <div class="tw-main">
-              <div class="tw-pts ${twDown ? 'down' : ''}">${tw.points || '—'}</div>
-              <div class="tw-change ${twDown ? 'down' : ''}">${tw.change || ''}</div>
+      ${d.summary ? `<div class="summary-banner">${d.summary}</div>` : ''}
+
+      <div class="index-strip" id="indexStrip">${indexHtml}</div>
+
+      <section>
+        <div class="section-label">重大國際財經事件</div>
+        <div class="events-grid">${evHtml || '<div style="color:var(--text-dim);font-size:13px;padding:12px 0">本日無重大事件記錄</div>'}</div>
+      </section>
+
+      <section>
+        <div class="section-label">台股今日影響分析</div>
+        <div class="tw-grid">
+          <div class="tw-main">
+            <div>
+              <div class="tw-big-num ${twNumCls}">${arrow(tw.change)}${tw.change || '—'}</div>
+              <div class="tw-big-label">加權指數 ${tw.points ? tw.points + ' 點' : ''}</div>
             </div>
-            <div class="tw-note">${tw.note || ''}</div>
-            <div class="sector-list">${sectorHtml}</div>
+            <div class="tw-divider"></div>
+            <div class="tw-sub-text">${tw.note || '—'}</div>
           </div>
+          ${sectorHtml}
         </div>
+      </section>
 
-        ${evHtml ? `
-        <div class="section">
-          <div class="section-label">🌍 重大事件</div>
-          <div class="events-list">${evHtml}</div>
-        </div>` : ''}
+      ${riskHtml ? `
+      <section>
+        <div class="section-label">今日風險事件</div>
+        <div class="risk-list">${riskHtml}</div>
+      </section>` : ''}
 
-        ${riskHtml ? `
-        <div class="section">
-          <div class="section-label">⚠️ 風險提示</div>
-          <div class="risk-list">${riskHtml}</div>
-        </div>` : ''}
+      ${tmrHtml ? `
+      <section>
+        <div class="section-label">明日觀察重點</div>
+        <div class="tomorrow-list">${tmrHtml}</div>
+      </section>` : ''}
 
-        ${tmrHtml ? `
-        <div class="section">
-          <div class="section-label">🔭 明日觀察重點</div>
-          <div class="tomorrow-list">${tmrHtml}</div>
-        </div>` : ''}
-
-        <div class="section">
-          <div class="section-label">📎 資料來源</div>
-          <div class="sources-row">${srcHtml}</div>
-          <div class="generated">產出時間：${d.generated || '—'}</div>
+      <footer>
+        <div class="footer-sources">${srcHtml}</div>
+        <div class="footer-right">
+          FINANCIAL INSIGHTS · MARKET SUMMARY<br>
+          <span style="color:var(--text-dim);font-size:9px">${d.generated || ''}</span>
         </div>
-      </div>`;
+      </footer>`;
+
+    // Trigger bottom bar animation
+    setTimeout(() => {
+      document.querySelectorAll('.index-card').forEach(c => c.classList.add('loaded'));
+    }, 200);
   }
 </script>
 </body>
