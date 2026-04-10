@@ -13,23 +13,23 @@
   <h2>醫學知識</h2>
   <p>尚未建立</p>
 
-  <script>
-    const files = [
-      "2026-04-09.html"
-    ];
+<script>
+  fetch('/stocks.json')
+    .then(res => res.json())
+    .then(files => {
+      const list = document.getElementById("stock-list");
 
-    const list = document.getElementById("stock-list");
+      files.sort().reverse().forEach(file => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
 
-    files.sort().reverse().forEach(file => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
+        a.href = "/stocks/" + file;
+        a.textContent = file.replace(".html", "") + " 股市";
 
-      a.href = "/stocks/" + file;
-      a.textContent = file.replace(".html", "") + " 股市";
-
-      li.appendChild(a);
-      list.appendChild(li);
+        li.appendChild(a);
+        list.appendChild(li);
+      });
     });
-  </script>
+</script>
 </body>
 </html>
