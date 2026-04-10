@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8" />
   <title>雲端知識誌</title>
 </head>
 <body>
   <h1>雲端知識誌</h1>
 
   <h2>股市內容</h2>
-  <ul>
-    <li><a href="/stocks/2026-04-09.html">2026-04-09 股市</a></li>
-  </ul>
+  <ul id="stock-list"></ul>
 
   <h2>醫學知識</h2>
   <p>尚未建立</p>
+
+  <script>
+    const files = [
+      "2026-04-09.html"
+    ];
+
+    const list = document.getElementById("stock-list");
+
+    files.sort().reverse().forEach(file => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+
+      a.href = "/stocks/" + file;
+      a.textContent = file.replace(".html", "") + " 股市";
+
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  </script>
 </body>
 </html>
