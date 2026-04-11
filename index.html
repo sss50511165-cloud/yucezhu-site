@@ -1,4 +1,4 @@
-<!-- 雲端知識誌 v1.1 -->
+<!-- 雲端知識誌 v2.0 — 雙欄首頁 -->
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -18,6 +18,9 @@
     --gold-light: #f0c96a;
     --gold-dim: rgba(201,168,76,0.08);
     --gold-dim2: rgba(201,168,76,0.15);
+    --teal: #3db8a8;
+    --teal-dim: rgba(61,184,168,0.08);
+    --teal-dim2: rgba(61,184,168,0.15);
     --up: #3dd68c;
     --text: #e2e4f0;
     --muted: #5a6080;
@@ -25,7 +28,6 @@
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -37,7 +39,6 @@
     overflow-x: hidden;
   }
 
-  /* Grain texture */
   body::after {
     content: '';
     position: fixed;
@@ -50,7 +51,6 @@
 
   /* ── HEADER ── */
   header {
-    position: relative;
     padding: 0 32px;
     border-bottom: 1px solid var(--border);
     display: flex;
@@ -61,381 +61,231 @@
   }
 
   .logo {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
+    display: flex; align-items: center;
+    gap: 14px; text-decoration: none;
   }
-
   .logo-mark {
     width: 32px; height: 32px;
     border: 1px solid var(--gold);
     display: flex; align-items: center; justify-content: center;
     position: relative;
   }
-
   .logo-mark::before {
     content: '';
-    position: absolute;
-    inset: 3px;
+    position: absolute; inset: 3px;
     background: var(--gold-dim2);
   }
-
   .logo-mark span {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--gold);
-    position: relative;
+    font-size: 11px; font-weight: 600;
+    color: var(--gold); position: relative;
   }
-
   .logo-text {
     font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    color: var(--text);
+    font-size: 18px; color: var(--text);
     letter-spacing: 0.02em;
   }
-
   .header-right {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 10px; letter-spacing: 0.15em;
+    color: var(--muted); text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
   }
-
   .live-pip {
     width: 6px; height: 6px;
-    background: var(--up);
-    border-radius: 50%;
+    background: var(--up); border-radius: 50%;
     animation: blink 2.4s infinite;
   }
 
   /* ── HERO ── */
   .hero {
-    padding: 72px 32px 56px;
-    max-width: 1100px;
-    margin: 0 auto;
+    padding: 64px 32px 48px;
+    max-width: 1200px; margin: 0 auto;
     animation: fadeUp 0.7s 0.1s ease both;
   }
-
   .hero-eyebrow {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
+    font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--gold);
     margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    display: flex; align-items: center; gap: 14px;
   }
-
-  .hero-eyebrow::before {
-    content: '';
-    width: 24px; height: 1px;
-    background: var(--gold);
-  }
-
+  .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
   .hero h1 {
     font-family: 'DM Serif Display', serif;
-    font-size: clamp(40px, 6vw, 72px);
-    line-height: 1.08;
-    font-weight: 400;
-    color: var(--text);
-    max-width: 700px;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.08; font-weight: 400;
+    color: var(--text); max-width: 700px;
   }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
+  .hero h1 em { font-style: italic; color: var(--gold); }
   .hero-sub {
-    margin-top: 20px;
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.8;
-    max-width: 420px;
+    margin-top: 18px; font-size: 14px;
+    color: var(--muted); line-height: 1.8; max-width: 520px;
   }
 
-  /* ── MAIN LAYOUT ── */
-  .main {
-    max-width: 1100px;
+  .gold-bar {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 32px 40px; opacity: 0.3;
+  }
+
+  /* ── DUAL COLUMNS ── */
+  .dual {
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 32px 80px;
     display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 40px;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
     align-items: start;
   }
 
-  /* ── SECTION LABEL ── */
-  .section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
+  /* ── COLUMN CARD ── */
+  .col-card {
+    animation: fadeUp 0.7s ease both;
+  }
+  .col-card:nth-child(2) { animation-delay: 0.1s; }
+
+  .col-header {
+    display: flex; align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
   }
 
-  .section-label::after {
+  .col-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .col-title.stock-theme { color: var(--gold); }
+  .col-title.med-theme   { color: var(--teal); }
+
+  .col-title::before {
     content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
+    width: 6px; height: 6px;
+    border-radius: 50%;
   }
+  .col-title.stock-theme::before { background: var(--gold); }
+  .col-title.med-theme::before   { background: var(--teal); }
 
-  /* ── STOCK LIST ── */
-  .stock-section {
-    animation: fadeUp 0.7s 0.2s ease both;
+  .col-more {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
   }
+  .col-more.stock-theme { color: var(--muted); }
+  .col-more.stock-theme:hover { color: var(--gold); }
+  .col-more.med-theme   { color: var(--muted); }
+  .col-more.med-theme:hover   { color: var(--teal); }
 
-  #stock-list {
-    list-style: none;
-    display: grid;
-    gap: 2px;
-  }
+  .col-more .arrow-icon { transition: transform 0.2s; }
+  .col-more:hover .arrow-icon { transform: translateX(3px); }
 
-  #stock-list li {
-    opacity: 0;
-    transform: translateY(8px);
+  /* ── ENTRY LIST ── */
+  .entry-list { list-style: none; display: grid; gap: 2px; }
+
+  .entry-list li {
+    opacity: 0; transform: translateY(8px);
     animation: fadeUp 0.4s ease forwards;
   }
 
-  #stock-list a {
-    display: flex;
-    align-items: center;
+  .entry-list a {
+    display: flex; align-items: center;
     justify-content: space-between;
-    padding: 16px 20px;
+    padding: 14px 18px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 3px;
-    text-decoration: none;
-    color: var(--text);
+    text-decoration: none; color: var(--text);
     transition: border-color 0.2s, background 0.2s;
-    gap: 16px;
+    gap: 14px;
   }
-
-  #stock-list a:hover {
-    border-color: var(--gold);
-    background: var(--gold-dim);
-  }
-
-  #stock-list a:hover .entry-arrow {
-    transform: translateX(4px);
-    color: var(--gold);
-  }
+  .entry-list.stock-theme a:hover { border-color: var(--gold); background: var(--gold-dim); }
+  .entry-list.stock-theme a:hover .entry-arrow { transform: translateX(4px); color: var(--gold); }
+  .entry-list.med-theme a:hover { border-color: var(--teal); background: var(--teal-dim); }
+  .entry-list.med-theme a:hover .entry-arrow { transform: translateX(4px); color: var(--teal); }
 
   .entry-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    display: flex; align-items: center;
+    gap: 12px; flex: 1; min-width: 0;
   }
 
   .entry-date-badge {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 4px 10px;
-    white-space: nowrap;
-    min-width: 100px;
-    text-align: center;
+    font-size: 10px; letter-spacing: 0.08em;
+    color: var(--muted); background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 2px;
+    padding: 3px 8px; white-space: nowrap;
+    min-width: 88px; text-align: center;
   }
 
   .entry-title {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 13px; font-weight: 400;
     color: var(--text);
+    white-space: nowrap; overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .entry-tag {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
+    font-size: 9px; letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gold);
-    background: var(--gold-dim);
+    border-radius: 2px; padding: 2px 7px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .entry-tag.stock-tag {
+    color: var(--gold); background: var(--gold-dim);
     border: 1px solid var(--gold-dim2);
-    border-radius: 2px;
-    padding: 2px 8px;
+  }
+  .entry-tag.med-tag {
+    color: var(--teal); background: var(--teal-dim);
+    border: 1px solid var(--teal-dim2);
+  }
+
+  .entry-stars {
+    font-size: 10px; color: var(--gold);
+    white-space: nowrap; flex-shrink: 0;
   }
 
   .entry-arrow {
-    font-size: 14px;
-    color: var(--muted);
-    transition: transform 0.2s, color 0.2s;
-    flex-shrink: 0;
+    font-size: 13px; color: var(--muted);
+    transition: transform 0.2s, color 0.2s; flex-shrink: 0;
   }
 
-  /* Loading state */
   .loading-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 20px;
-    color: var(--muted);
+    display: flex; align-items: center; gap: 12px;
+    padding: 20px; color: var(--muted);
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
+    font-size: 11px; letter-spacing: 0.1em;
   }
-
   .loading-dot {
-    width: 6px; height: 6px;
-    background: var(--gold);
-    border-radius: 50%;
+    width: 6px; height: 6px; border-radius: 50%;
     animation: blink 1s infinite;
   }
+  .loading-dot.gold { background: var(--gold); }
+  .loading-dot.teal { background: var(--teal); }
 
-  /* Empty state */
   .empty-state {
-    padding: 32px 20px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-    border: 1px dashed var(--border2);
-    border-radius: 3px;
-  }
-
-  /* ── SIDEBAR ── */
-  .sidebar {
-    display: grid;
-    gap: 24px;
-    animation: fadeUp 0.7s 0.3s ease both;
-  }
-
-  .sidebar-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .sidebar-card-head {
-    padding: 14px 18px;
-    border-bottom: 1px solid var(--border);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-
-  .sidebar-card-body {
-    padding: 18px;
-  }
-
-  /* About card */
-  .about-text {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-
-  .about-text strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  /* Coming soon card */
-  .coming-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  .coming-item:last-child { border-bottom: none; }
-
-  .coming-icon {
-    width: 28px; height: 28px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  .coming-label { font-size: 13px; color: var(--text); }
-  .coming-status {
-    margin-left: auto;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: var(--dim);
-    text-transform: uppercase;
-  }
-
-  /* Stats card */
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .stat-row:last-child { border-bottom: none; }
-
-  .stat-label {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .stat-val {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--gold);
+    padding: 24px 18px; text-align: center;
+    color: var(--muted); font-size: 13px;
+    border: 1px dashed var(--border2); border-radius: 3px;
   }
 
   /* ── FOOTER ── */
   footer {
     border-top: 1px solid var(--border);
     padding: 20px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 12px;
     animation: fadeUp 0.7s 0.4s ease both;
   }
-
-  .footer-left {
+  .footer-left, .footer-right {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: var(--dim);
-  }
-
-  .footer-right {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--dim);
-  }
-
-  /* ── DIVIDER ── */
-  .gold-bar {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 0 32px 40px;
-    opacity: 0.3;
+    font-size: 10px; letter-spacing: 0.12em; color: var(--dim);
   }
 
   /* ── ANIMATIONS ── */
@@ -443,25 +293,22 @@
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.2; }
+    0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
   }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
+  @media (max-width: 860px) {
+    .dual { grid-template-columns: 1fr; }
     header { padding: 0 20px; }
-    .hero  { padding: 48px 20px 40px; }
-    .main  { grid-template-columns: 1fr; padding: 0 20px 60px; }
+    .hero  { padding: 48px 20px 36px; }
+    .dual  { padding: 0 20px 60px; }
     .gold-bar { margin: 0 20px 32px; }
     footer { padding: 16px 20px; }
-    .sidebar { order: -1; }
   }
 </style>
 </head>
@@ -469,7 +316,7 @@
 
 <!-- HEADER -->
 <header>
-  <a class="logo" href="/yucezhu-site/">
+  <a class="logo" href="/yucezhu-site/" onclick="event.preventDefault(); location.reload();">
     <div class="logo-mark"><span>誌</span></div>
     <span class="logo-text">雲端知識誌</span>
   </a>
@@ -482,80 +329,41 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow">Knowledge · Every Day</div>
-  <h1>每日財經<br><em>知識彙整</em></h1>
-  <p class="hero-sub">整合台股、美股重大事件，每日更新。<br>簡潔閱讀，快速掌握市場脈動。</p>
+  <h1>雲端<br><em>知識誌</em></h1>
+  <p class="hero-sub">整合每日財經與醫學新知，<br>AI 自動整理，簡潔閱讀，快速掌握重要動態。</p>
 </div>
 
 <div class="gold-bar"></div>
 
-<!-- MAIN -->
-<div class="main">
+<!-- DUAL COLUMNS -->
+<div class="dual">
 
-  <!-- STOCK LIST -->
-  <section class="stock-section">
-    <div class="section-label">股市摘要 · 每日更新</div>
-    <ul id="stock-list">
-      <li>
-        <div class="loading-row">
-          <div class="loading-dot"></div>
-          <span>載入中...</span>
-        </div>
-      </li>
+  <!-- ── 股市區 ── -->
+  <div class="col-card">
+    <div class="col-header">
+      <div class="col-title stock-theme">股市摘要 · 每日更新</div>
+      <a class="col-more stock-theme" href="./stocks/index.html">
+        查看全部 <span class="arrow-icon">→</span>
+      </a>
+    </div>
+    <ul class="entry-list stock-theme" id="stock-list">
+      <li><div class="loading-row"><div class="loading-dot gold"></div><span>載入中...</span></div></li>
     </ul>
-  </section>
+  </div>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-
-    <!-- STATS -->
-    <div class="sidebar-card">
-      <div class="sidebar-card-head">統計</div>
-      <div class="sidebar-card-body">
-        <div class="stat-row">
-          <span class="stat-label">已收錄摘要</span>
-          <span class="stat-val" id="stat-count">—</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">最新更新</span>
-          <span class="stat-val" id="stat-latest" style="font-size:12px">—</span>
-        </div>
-      </div>
+  <!-- ── 醫學區 ── -->
+  <div class="col-card">
+    <div class="col-header">
+      <div class="col-title med-theme">內科醫學新知 · 每日更新</div>
+      <a class="col-more med-theme" href="./medical/index.html">
+        查看全部 <span class="arrow-icon">→</span>
+      </a>
     </div>
+    <ul class="entry-list med-theme" id="med-list">
+      <li><div class="loading-row"><div class="loading-dot teal"></div><span>載入中...</span></div></li>
+    </ul>
+  </div>
 
-    <!-- ABOUT -->
-    <div class="sidebar-card">
-      <div class="sidebar-card-head">關於</div>
-      <div class="sidebar-card-body">
-        <p class="about-text">
-          <strong>雲端知識誌</strong> 是一個個人財經知識彙整平台。<br><br>
-          每日自動整合台股、美股重大事件，以簡潔易讀的方式呈現市場摘要。
-        </p>
-      </div>
-    </div>
-
-    <!-- COMING SOON -->
-    <div class="sidebar-card">
-      <div class="sidebar-card-head">即將推出</div>
-      <div class="sidebar-card-body">
-        <div class="coming-item">
-          <div class="coming-icon">📈</div>
-          <span class="coming-label">股市摘要</span>
-          <span class="coming-status" style="color:var(--up)">上線中</span>
-        </div>
-        <div class="coming-item" style="cursor:pointer" onclick="location.href='./medical/index.html'">
-          <div class="coming-icon">🏥</div>
-          <span class="coming-label">醫學知識</span>
-          <span class="coming-status" style="color:var(--up)">上線中</span>
-        </div>
-        <div class="coming-item">
-          <div class="coming-icon">🌐</div>
-          <span class="coming-label">科技趨勢</span>
-          <span class="coming-status">籌備中</span>
-        </div>
-      </div>
-    </div>
-
-  </aside>
 </div>
 
 <!-- FOOTER -->
@@ -565,7 +373,7 @@
 </footer>
 
 <script>
-  // Live date
+  // ── Live date ──
   function updateDate() {
     const now = new Date();
     const tw = new Intl.DateTimeFormat('zh-TW', {
@@ -578,23 +386,16 @@
   updateDate();
   setInterval(updateDate, 30000);
 
-  // Load stock list — supports both array [] and {files:[]} formats
+  const MAX_ITEMS = 5;
+
+  // ── Stock list ──
   fetch('./stocks.json')
     .then(r => r.json())
     .then(data => {
-      // Support both formats
       const files = Array.isArray(data) ? data : (data.files || []);
-      const sorted = [...files].sort().reverse();
-
+      const sorted = [...files].sort().reverse().slice(0, MAX_ITEMS);
       const list = document.getElementById('stock-list');
       list.innerHTML = '';
-
-      // Update stats
-      document.getElementById('stat-count').textContent = sorted.length;
-      if (sorted.length > 0) {
-        document.getElementById('stat-latest').textContent =
-          sorted[0].replace('.html', '');
-      }
 
       if (sorted.length === 0) {
         list.innerHTML = '<li><div class="empty-state">尚無摘要，敬請期待</div></li>';
@@ -610,7 +411,7 @@
             <div class="entry-left">
               <span class="entry-date-badge">${date}</span>
               <span class="entry-title">股市摘要</span>
-              <span class="entry-tag">每日</span>
+              <span class="entry-tag stock-tag">每日</span>
             </div>
             <span class="entry-arrow">→</span>
           </a>`;
@@ -619,10 +420,50 @@
     })
     .catch(() => {
       document.getElementById('stock-list').innerHTML =
-        '<li><div class="empty-state">無法載入資料，請稍後再試</div></li>';
+        '<li><div class="empty-state">無法載入資料</div></li>';
+    });
+
+  // ── Medical list ──
+  const DEPT_MAP = {
+    '心臟科': '❤️', '內分泌科': '🔬', '感染科': '🦠',
+    '腎臟科': '💧', '胸腔科': '🫁'
+  };
+
+  fetch('./medical.json')
+    .then(r => r.json())
+    .then(data => {
+      const items = (Array.isArray(data) ? data : []).slice(0, MAX_ITEMS);
+      const list = document.getElementById('med-list');
+      list.innerHTML = '';
+
+      if (items.length === 0) {
+        list.innerHTML = '<li><div class="empty-state">尚無文獻，敬請期待</div></li>';
+        return;
+      }
+
+      items.forEach((item, i) => {
+        const key = item.filename.replace('.json', '');
+        const stars = '★'.repeat(item.stars || 0) + '☆'.repeat(5 - (item.stars || 0));
+        const icon = DEPT_MAP[item.department] || '🏥';
+        const li = document.createElement('li');
+        li.style.animationDelay = `${i * 60}ms`;
+        li.innerHTML = `
+          <a href="./medical/viewer.html?d=${encodeURIComponent(key)}">
+            <div class="entry-left">
+              <span class="entry-date-badge">${item.date}</span>
+              <span class="entry-tag med-tag">${icon} ${item.department}</span>
+              <span class="entry-title">${item.summary || item.title_zh || ''}</span>
+            </div>
+            <span class="entry-stars">${stars}</span>
+            <span class="entry-arrow">→</span>
+          </a>`;
+        list.appendChild(li);
+      });
+    })
+    .catch(() => {
+      document.getElementById('med-list').innerHTML =
+        '<li><div class="empty-state">無法載入資料</div></li>';
     });
 </script>
 </body>
 </html>
-< ! - -   2 0 2 6 - 0 4 - 1 0   - - >  
- 
