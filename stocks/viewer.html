@@ -648,4 +648,27 @@
       <section>
         <div class="section-label">今日風險事件</div>
         <div class="risk-list">${riskHtml}</div>
-      </sectio
+      </section>` : ''}
+
+      ${tmrHtml ? `
+      <section>
+        <div class="section-label">明日觀察重點</div>
+        <div class="tomorrow-list">${tmrHtml}</div>
+      </section>` : ''}
+
+      <footer>
+        <div class="footer-sources">${srcHtml}</div>
+        <div class="footer-right">
+          FINANCIAL INSIGHTS · MARKET SUMMARY<br>
+          <span style="color:var(--text-dim);font-size:9px">${d.generated || ''}</span>
+        </div>
+      </footer>`;
+
+    // Trigger bottom bar animation
+    setTimeout(() => {
+      document.querySelectorAll('.index-card').forEach(c => c.classList.add('loaded'));
+    }, 200);
+  }
+</script>
+</body>
+</html>
