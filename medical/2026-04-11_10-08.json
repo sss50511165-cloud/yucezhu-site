@@ -1,0 +1,41 @@
+{
+  "date": "2026-04-11",
+  "time": "10:08",
+  "department": "內分泌科",
+  "summary": "二十年族群世代研究顯示甲狀腺素治療長期存在過度用藥問題",
+  "paper": {
+    "title_en": "Thyroid hormone therapy in a population cohort over two decades indicates persistent overtreatment",
+    "title_zh": "二十年族群世代研究顯示甲狀腺素治療長期持續過度用藥（AI 翻譯，請校對）",
+    "journal": "European Thyroid Journal",
+    "impact_factor": "請至 JCR 手動確認",
+    "published": "2026-04-10",
+    "pmid": "41961727",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41961727/"
+  },
+  "design": {
+    "type": "population cohort",
+    "note": "德國 Heinz Nixdorf Recall 研究之描述性縱向分析，追蹤 7,711 名參與者達 20 年（2000–2023年），平均年齡從 53.8 歲至 68.7 歲。"
+  },
+  "findings": [
+    "甲狀腺素處方比例在二十年間從 9.2% 上升至 15.3%，但甲狀腺疾病盛行率維持穩定",
+    "基線時 35% 具 TSH 受抑制（<0.45 mIU/L）的參與者仍在接受甲狀腺素治療，20 年後此比例仍維持在 25%",
+    "過度治療在女性及老年族群中更為普遍"
+  ],
+  "clinical_points": [
+    "臨床指引更新與實際醫療執行之間存在顯著落差，需加強醫病教育",
+    "建議採行限制性檢測策略及定期治療效益評估，以減少不必要的甲狀腺素使用",
+    "老年患者應考慮年齡調整劑量策略，避免 TSH 過度抑制引發心血管及骨骼併發症"
+  ],
+  "keywords": ["甲狀腺素", "過度治療", "TSH", "族群世代", "內分泌科"],
+  "rating": {
+    "stars": 4,
+    "reason": "大型族群世代研究（n=7,711），追蹤長達 20 年，具高度臨床相關性；惟屬描述性分析，無干預設計"
+  },
+  "verification": {
+    "pmid_checked": true,
+    "title_matched": true,
+    "date_in_range": true
+  },
+  "source": ["PubMed"],
+  "generated": "2026-04-11 10:08"
+}

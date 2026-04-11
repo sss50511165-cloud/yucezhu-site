@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>股市摘要 · 雲端知識誌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08090d;--surface:#0f1117;--surface2:#161820;--border:#1e2130;--gold:#c9a84c;--gold-dim:rgba(201,168,76,0.09);--gold-dim2:rgba(201,168,76,0.16);--up:#3dd68c;--down:#f0644a;--warn:#f5c842;--text:#e8e9ef;--muted:#6b7190;--dim:#2a2d40}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;font-size:15px;line-height:1.7;min-height:100vh}
+.wrap{max-width:680px;margin:0 auto;padding:0 0 72px}
+
+/* TOPBAR */
+.topbar{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.topbar-logo{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--gold);text-decoration:none}
+.topbar-back{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s}
+.topbar-back:hover{color:var(--gold)}
+
+/* HERO */
+.hero{padding:28px 20px 20px;border-bottom:1px solid var(--border)}
+.hero-date{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.hero-summary{font-size:16px;font-weight:500;color:var(--text);line-height:1.6;padding-left:14px;border-left:3px solid var(--gold)}
+
+/* SECTION */
+.section{padding:24px 20px 0}
+.label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* INDICES */
+.index-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.idx{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:12px 14px}
+.idx-name{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.idx-val{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600}
+.up{color:var(--up)}.down{color:var(--down)}.neutral{color:var(--muted)}
+
+/* TW */
+.tw-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:18px}
+.tw-big{font-family:'IBM Plex Mono',monospace;font-size:36px;font-weight:600;line-height:1}
+.tw-pts{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin-top:4px;margin-bottom:10px}
+.tw-note{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;color:var(--gold);border:1px solid var(--gold-dim2);border-radius:2px;padding:3px 10px;background:var(--gold-dim)}
+
+/* EVENTS */
+.events{display:grid;gap:0}
+.event-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}
+.event-item:last-child{border-bottom:none}
+.event-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;margin-top:2px}
+.event-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px}
+.event-detail{font-size:12px;color:var(--muted);line-height:1.65}
+.event-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);margin-top:5px}
+
+/* RISKS */
+.risk-list,.obs-list{list-style:none;display:grid;gap:8px}
+.risk-list li{padding:12px 15px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--warn);border-radius:0 3px 3px 0;font-size:13px;color:var(--muted);line-height:1.7}
+.obs-list li{padding:12px 15px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--dim);border-radius:0 3px 3px 0;font-size:13px;color:var(--muted);line-height:1.7}
+
+/* FOOTER */
+footer{margin-top:48px;padding:16px 20px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+.footer-sources{display:flex;flex-wrap:wrap;gap:6px}
+.src-chip{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--border);border-radius:2px;padding:3px 8px}
+.footer-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim)}
+
+/* ERROR / LOADING */
+.state-msg{padding:60px 20px;text-align:center;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em}
+.loading-dot{display:inline-block;width:6px;height:6px;background:var(--gold);border-radius:50%;margin-right:8px;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.loaded{animation:fadeUp .5s ease both}
+
+@media(max-width:480px){
+  .index-row{grid-template-columns:1fr 1fr}
+  .topbar,.section{padding-left:16px;padding-right:16px}
+  .hero{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <a class="topbar-logo" href="/">雲端知識誌</a>
+  <a class="topbar-back" href="/">← 返回首頁</a>
+</div>
+
+<div id="app">
+  <div class="state-msg"><span class="loading-dot"></span>載入中...</div>
+</div>
+
+</div>
+
+<script>
+// 從 URL 取得日期參數
+// 支援兩種格式：
+//   /stocks/template.html?date=2026-04-09
+//   /stocks/2026-04-09  （Netlify rewrite，進階用）
+const params = new URLSearchParams(window.location.search);
+let date = params.get('date');
+
+// 若沒有 date 參數，從路徑推斷（如直接放成 /stocks/2026-04-09.html 的情境）
+if (!date) {
+  const pathMatch = window.location.pathname.match(/(\d{4}-\d{2}-\d{2})/);
+  if (pathMatch) date = pathMatch[1];
+}
+
+if (!date) {
+  document.getElementById('app').innerHTML =
+    '<div class="state-msg">❌ 缺少日期參數<br><small>網址應為 ?date=YYYY-MM-DD</small></div>';
+} else {
+  document.title = `股市摘要 ${date} · 雲端知識誌`;
+  fetch(`/stocks/${date}.json`)
+    .then(r => { if (!r.ok) throw new Error('not found'); return r.json(); })
+    .then(render)
+    .catch(() => {
+      document.getElementById('app').innerHTML =
+        `<div class="state-msg">❌ 找不到 ${date} 的摘要資料</div>`;
+    });
+}
+
+function cls(val) {
+  if (!val) return 'neutral';
+  const s = val.toString();
+  if (s.startsWith('+') || s.startsWith('▲')) return 'up';
+  if (s.startsWith('-') || s.startsWith('▼')) return 'down';
+  return 'neutral';
+}
+
+function render(d) {
+  const events = (d.events || []).map(e => `
+    <div class="event-item">
+      <span class="event-icon">${e.icon || '📌'}</span>
+      <div>
+        <div class="event-title">${e.title}</div>
+        <div class="event-detail">${e.detail}</div>
+        ${e.meta ? `<div class="event-meta">${e.meta}</div>` : ''}
+      </div>
+    </div>`).join('');
+
+  const risks = (d.risks || []).map(r => `<li>${r}</li>`).join('');
+  const tomorrow = (d.tomorrow || []).map(t => `<li>🔍 ${t}</li>`).join('');
+  const sectors = (d.tw?.sectors || []).map(s => `<span class="chip">${s}</span>`).join('');
+  const sources = (d.sources || []).map(s => `<span class="src-chip">${s}</span>`).join('');
+
+  const us = d.us || {};
+  const tw = d.tw || {};
+
+  document.getElementById('app').innerHTML = `
+    <div class="loaded">
+
+    <div class="hero">
+      <div class="hero-date">📅 ${d.date || date} · 股市摘要</div>
+      <div class="hero-summary">${d.summary || ''}</div>
+    </div>
+
+    <div class="section">
+      <div class="label">美股三大指數</div>
+      <div class="index-row">
+        <div class="idx">
+          <div class="idx-name">Dow Jones</div>
+          <div class="idx-val ${cls(us.dow)}">${us.dow || '—'}</div>
+        </div>
+        <div class="idx">
+          <div class="idx-name">Nasdaq</div>
+          <div class="idx-val ${cls(us.nasdaq)}">${us.nasdaq || '—'}</div>
+        </div>
+        <div class="idx">
+          <div class="idx-name">S&amp;P 500</div>
+          <div class="idx-val ${cls(us.sp500)}">${us.sp500 || '—'}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="label">台股</div>
+      <div class="tw-card">
+        <div class="tw-big ${cls(tw.change)}">${tw.change || '—'}</div>
+        ${tw.points ? `<div class="tw-pts">${tw.points} 點</div>` : ''}
+        <div class="tw-note">${tw.note || ''}</div>
+        <div class="chips">${sectors}</div>
+      </div>
+    </div>
+
+    ${events ? `
+    <div class="section">
+      <div class="label">重大國際財經事件</div>
+      <div class="events">${events}</div>
+    </div>` : ''}
+
+    ${risks ? `
+    <div class="section">
+      <div class="label">今日風險提醒</div>
+      <ul class="risk-list">${risks}</ul>
+    </div>` : ''}
+
+    ${tomorrow ? `
+    <div class="section">
+      <div class="label">明日觀察</div>
+      <ul class="obs-list">${tomorrow}</ul>
+    </div>` : ''}
+
+    <footer>
+      <div class="footer-sources">${sources}</div>
+      <div class="footer-time">產出：${d.generated || date}</div>
+    </footer>
+
+    </div>`;
+}
+</script>
+</body>
+</html>

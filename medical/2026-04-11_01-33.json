@@ -1,0 +1,45 @@
+{
+  "date": "2026-04-11",
+  "time": "01:33",
+  "department": "內分泌科",
+  "summary": "Ecnoglutide（新型GLP-1受體促效劑）統合分析：顯著改善血糖控制與體重，安全性可接受",
+  "paper": {
+    "title_en": "Comparative Efficacy and Safety of Ecnoglutide in Type 2 Diabetes: A Systematic Review and Meta-Analysis",
+    "title_zh": "艾可納膠（Ecnoglutide）在第二型糖尿病的療效與安全性比較：系統性回顧與統合分析（AI 翻譯，請校對）",
+    "journal": "Endocrinology, Diabetes & Metabolism",
+    "impact_factor": "請至 JCR 手動確認",
+    "published": "2026-04",
+    "pmid": "41937314",
+    "doi": "10.1002/edm2.70217",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41937314/"
+  },
+  "design": {
+    "type": "systematic review and meta-analysis",
+    "note": "納入4項隨機對照試驗（RCT），共1,643名第二型糖尿病患者（1,162人接受Ecnoglutide，444人為對照組）；搜尋截止2025年9月。"
+  },
+  "findings": [
+    "Ecnoglutide 顯著降低 HbA1c（MD = -0.44%，95% CI -0.55 至 -0.33，p < 0.00001）",
+    "體重顯著下降（MD = -5.63 kg，95% CI -7.90 至 -3.35，p < 0.01）",
+    "空腹血糖（FPG）顯著改善（MD = -0.81 mmol/L，95% CI -1.03 至 -0.59，p < 0.00001）",
+    "胰島素敏感性、血脂、肝酶均見改善",
+    "不良事件發生率略高（RR = 1.09，p < 0.01），以胃腸道症狀為主（輕中度）；嚴重不良事件無顯著差異"
+  ],
+  "clinical_points": [
+    "Ecnoglutide 作為新型 cAMP 偏向性 GLP-1 受體促效劑，在血糖控制及體重管理上展現穩健療效，安全性可接受",
+    "4項RCT統合分析支持其成為下一代GLP-1 RA的治療潛力",
+    "胃腸道副作用多為輕至中度，不影響整體風險效益比，臨床應用值得期待"
+  ],
+  "keywords": ["Ecnoglutide", "GLP-1受體促效劑", "第二型糖尿病", "HbA1c", "統合分析"],
+  "rating": {
+    "stars": 4,
+    "reason": "系統性回顧與統合分析設計嚴謹，樣本數適中（4 RCTs, 1,643人），但Ecnoglutide目前臨床試驗數量仍有限，期刊為中等影響力"
+  },
+  "verification": {
+    "pmid_checked": true,
+    "title_matched": true,
+    "date_in_range": true,
+    "note": "PMID 41937314 已透過 QxMD/PubMed URL 確認存在，標題一致；PubMed 直接頁面因網路限制無法存取，透過多來源交叉驗證"
+  },
+  "source": ["PubMed", "Wiley Online Library", "QxMD"],
+  "generated": "2026-04-11 01:33"
+}
