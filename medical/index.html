@@ -422,7 +422,7 @@
         li.innerHTML = `
           <a href="./viewer.html?d=${encodeURIComponent(key)}">
             <div class="entry-left">
-              <span class="entry-date-badge">${item.date}</span>
+              <span class="entry-date-badge">${item.pub_date || item.date}</span>
               <span class="entry-dept">${icon} ${item.department}</span>
               <span class="entry-summary">${item.summary || item.title_zh || ''}</span>
             </div>

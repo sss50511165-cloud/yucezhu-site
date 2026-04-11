@@ -450,7 +450,7 @@
         li.innerHTML = `
           <a href="./medical/viewer.html?d=${encodeURIComponent(key)}">
             <div class="entry-left">
-              <span class="entry-date-badge">${item.date}</span>
+              <span class="entry-date-badge">${item.pub_date || item.date}</span>
               <span class="entry-tag med-tag">${icon} ${item.department}</span>
               <span class="entry-title">${item.summary || item.title_zh || ''}</span>
             </div>
