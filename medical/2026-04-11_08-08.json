@@ -1,0 +1,41 @@
+{
+  "date": "2026-04-11",
+  "time": "08:08",
+  "department": "內分泌科",
+  "summary": "GLP-1受體促效劑可顯著降低煙霧病合併第二型糖尿病患者的腦卒中、顱內出血及死亡風險",
+  "paper": {
+    "title_en": "Glucagon-like peptide-1 receptor agonists in patients with moyamoya disease and type 2 diabetes mellitus",
+    "title_zh": "GLP-1 受體促效劑用於煙霧病合併第二型糖尿病患者（AI 翻譯，請校對）",
+    "journal": "Journal of Neurosurgery",
+    "impact_factor": "請至 JCR 手動確認",
+    "published": "2026-04-10",
+    "pmid": "41962156",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41962156/"
+  },
+  "design": {
+    "type": "cohort",
+    "note": "回溯性世代研究並搭配傾向分數配對（TriNetX 資料庫），各組 413 名患者"
+  },
+  "findings": [
+    "GLP-1 RA 組相較對照組，腦卒中風險降低 33%（HR 0.67, 95% CI 0.55–0.81; p < 0.001）",
+    "顱內出血（ICH）風險降低 71%（HR 0.29, 95% CI 0.15–0.58; p < 0.001）",
+    "全因死亡風險降低 66%（HR 0.34, 95% CI 0.21–0.56; p < 0.001）"
+  ],
+  "clinical_points": [
+    "GLP-1 受體促效劑在煙霧病合併 T2DM 患者中可能具有腦血管保護作用",
+    "研究結果支持未來進行前瞻性研究與隨機對照試驗（RCT）以確認其療效",
+    "臨床上管理煙霧病合併糖尿病患者時，GLP-1 RA 的使用值得進一步評估"
+  ],
+  "keywords": ["GLP-1 受體促效劑", "煙霧病", "第二型糖尿病", "腦卒中", "顱內出血"],
+  "rating": {
+    "stars": 4,
+    "reason": "傾向分數配對世代研究、樣本數適中（N=826）、使用大型資料庫 TriNetX、結果具統計顯著性；但非 RCT，有回溯性偏誤"
+  },
+  "verification": {
+    "pmid_checked": true,
+    "title_matched": true,
+    "date_in_range": true
+  },
+  "source": ["PubMed"],
+  "generated": "2026-04-11 08:08"
+}
