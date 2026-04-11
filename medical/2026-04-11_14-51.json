@@ -1,0 +1,42 @@
+{
+  "date": "2026-04-11",
+  "time": "14:51",
+  "department": "內分泌科",
+  "summary": "孕期動物蛋白與脂肪攝取增加妊娠糖尿病風險，膳食纖維具保護效果",
+  "paper": {
+    "title_en": "Maternal macronutrient intake and gestational diabetes: systematic review of prospective observational studies and dose-response meta-analyses",
+    "title_zh": "母體大量營養素攝取與妊娠糖尿病：前瞻性觀察研究的系統性回顧與劑量反應統合分析（AI 翻譯，請校對）",
+    "journal": "BMC Medicine",
+    "impact_factor": "請至 JCR 手動確認",
+    "published": "2026-04-11",
+    "pmid": "41963985",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41963985/"
+  },
+  "design": {
+    "type": "systematic review with dose-response meta-analyses",
+    "note": "納入 25 篇前瞻性觀察研究，共 115,496 名孕婦；使用 Newcastle-Ottawa Scale 評估研究品質，並進行劑量反應統合分析。"
+  },
+  "findings": [
+    "動物性蛋白質攝取與妊娠糖尿病風險呈劑量依賴性正相關（中等確定性證據，RR 1.62）",
+    "動物性脂肪攝取同樣與妊娠糖尿病風險正相關（RR 1.59）",
+    "膳食纖維攝取與妊娠糖尿病風險呈劑量依賴性負相關（保護效果，RR 0.65）",
+    "總蛋白質與植物性脂肪攝取雖顯示正相關，但無明確劑量反應關係"
+  ],
+  "clinical_points": [
+    "孕期飲食指引應特別強調減少動物性蛋白質攝取，以降低妊娠糖尿病風險",
+    "增加膳食纖維攝取可作為預防妊娠糖尿病的飲食策略",
+    "本研究為首次針對所有大量營養素來源對妊娠糖尿病影響的全面性分析，提供更具體的孕期營養建議基礎"
+  ],
+  "keywords": ["妊娠糖尿病", "大量營養素", "動物性蛋白質", "膳食纖維", "統合分析"],
+  "rating": {
+    "stars": 4,
+    "reason": "系統性回顧加劑量反應統合分析，樣本數達 115,496 人，發表於 BMC Medicine，為該領域首次全面性分析，臨床實用性高"
+  },
+  "verification": {
+    "pmid_checked": true,
+    "title_matched": true,
+    "date_in_range": true
+  },
+  "source": ["PubMed"],
+  "generated": "2026-04-11 14:51"
+}
