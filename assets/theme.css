@@ -14,8 +14,8 @@
   --border-color: rgba(201, 147, 91, 0.2);
   --border-hover: rgba(201, 147, 91, 0.5);
   --text-primary: #E8DDC8;
-  --text-secondary: rgba(232, 221, 200, 0.65);
-  --text-tertiary: rgba(232, 221, 200, 0.35);
+  --text-secondary: rgba(232, 221, 200, 0.85);
+  --text-tertiary: rgba(232, 221, 200, 0.5);
   --accent: #C9935B;
   --accent-light: #D9A676;
   --up: #6aad7a;
@@ -241,7 +241,7 @@ body::after {
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-size: 14px;
   font-weight: 300;
-  line-height: 1.75;
+  line-height: 1.9;
   color: var(--text-secondary);
 }
 
@@ -421,7 +421,7 @@ body::after {
 
 .info-table td {
   padding: 12px 0;
-  font-size: 13px;
+  font-size: 15px;
   vertical-align: top;
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-weight: 300;
@@ -457,8 +457,8 @@ body::after {
   display: flex;
   gap: 14px;
   align-items: flex-start;
-  font-size: 14px;
-  line-height: 1.8;
+  font-size: 16px;
+  line-height: 1.9;
   color: var(--text-primary);
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-weight: 300;
@@ -502,7 +502,7 @@ body::after {
   border: 0.5px solid rgba(212, 177, 86, 0.15);
   border-radius: 4px;
   padding: 20px 24px;
-  font-size: 13px;
+  font-size: 15px;
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-weight: 300;
   color: var(--text-tertiary);
@@ -657,6 +657,26 @@ body::after {
 
   .info-table td:first-child {
     width: 90px;
-    font-size: 12px;
+    font-size: 13px;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+
+  .card-excerpt {
+    font-size: 14px;
+  }
+
+  .kicker-en {
+    font-size: 10px;
+  }
+
+  .point-item {
+    font-size: 15px;
+  }
+
+  .info-table td {
+    font-size: 14px;
   }
 }
