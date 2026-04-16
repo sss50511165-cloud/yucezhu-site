@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>雲端知識誌</title>
+  <link>https://sss50511165-cloud.github.io/yucezhu-site</link>
+  <description>整合每日財經與醫學新知</description>
+  <language>zh-TW</language>
+  <lastBuildDate>Thu, 16 Apr 2026 19:36:39 GMT</lastBuildDate>
+  <atom:link href="https://sss50511165-cloud.github.io/yucezhu-site/feed.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>孕期動物蛋白與脂肪攝取增加妊娠糖尿病風險，膳食纖維具保護效果</title>
+    <link>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-11_14-51</link>
+    <description>母體大量營養素攝取與妊娠糖尿病：前瞻性觀察研究的系統性回顧與劑量反應統合分析（AI 翻譯，請校對）</description>
+    <pubDate>Sat, 11 Apr 2026 06:51:00 GMT</pubDate>
+    <category>內分泌科</category>
+    <guid>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-11_14-51</guid>
+  </item>
+  <item>
+    <title>股市摘要 — 2026-04-11</title>
+    <link>https://sss50511165-cloud.github.io/yucezhu-site/stocks/viewer.html?d=2026-04-11</link>
+    <description>台股美股每日重點事件整理，掌握市場動態。</description>
+    <pubDate>Sat, 11 Apr 2026 00:00:00 GMT</pubDate>
+    <category>股市摘要</category>
+    <guid>https://sss50511165-cloud.github.io/yucezhu-site/stocks/viewer.html?d=2026-04-11</guid>
+  </item>
+  <item>
+    <title>敗血症存活者PICS盛行率逾九成，早期介入可改善預後</title>
+    <link>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-12_06-11</link>
+    <description>敗血症存活者之加護病房後症候群與敗血症後症候群的盛行率及危險因子分析（AI 翻譯，請校對）</description>
+    <pubDate>Fri, 10 Apr 2026 22:11:00 GMT</pubDate>
+    <category>感染科</category>
+    <guid>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-12_06-11</guid>
+  </item>
+  <item>
+    <title>二十年族群世代研究顯示甲狀腺素治療長期存在過度用藥問題</title>
+    <link>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-11_10-08</link>
+    <description>二十年族群世代研究顯示甲狀腺素治療長期持續過度用藥（AI 翻譯，請校對）</description>
+    <pubDate>Fri, 10 Apr 2026 02:08:00 GMT</pubDate>
+    <category>內分泌科</category>
+    <guid>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-11_10-08</guid>
+  </item>
+  <item>
+    <title>GLP-1受體促效劑可顯著降低煙霧病合併第二型糖尿病患者的腦卒中、顱內出血及死亡風險</title>
+    <link>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-11_08-08</link>
+    <description>GLP-1 受體促效劑用於煙霧病合併第二型糖尿病患者（AI 翻譯，請校對）</description>
+    <pubDate>Fri, 10 Apr 2026 00:08:00 GMT</pubDate>
+    <category>內分泌科</category>
+    <guid>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-11_08-08</guid>
+  </item>
+  <item>
+    <title>股市摘要 — 2026-04-10</title>
+    <link>https://sss50511165-cloud.github.io/yucezhu-site/stocks/viewer.html?d=2026-04-10</link>
+    <description>台股美股每日重點事件整理，掌握市場動態。</description>
+    <pubDate>Fri, 10 Apr 2026 00:00:00 GMT</pubDate>
+    <category>股市摘要</category>
+    <guid>https://sss50511165-cloud.github.io/yucezhu-site/stocks/viewer.html?d=2026-04-10</guid>
+  </item>
+  <item>
+    <title>股市摘要 — 2026-04-09</title>
+    <link>https://sss50511165-cloud.github.io/yucezhu-site/stocks/viewer.html?d=2026-04-09</link>
+    <description>台股美股每日重點事件整理，掌握市場動態。</description>
+    <pubDate>Thu, 09 Apr 2026 00:00:00 GMT</pubDate>
+    <category>股市摘要</category>
+    <guid>https://sss50511165-cloud.github.io/yucezhu-site/stocks/viewer.html?d=2026-04-09</guid>
+  </item>
+  <item>
+    <title>Ecnoglutide（新型GLP-1受體促效劑）統合分析：顯著改善血糖控制與體重，安全性可接受</title>
+    <link>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-11_01-33</link>
+    <description>艾可納膠（Ecnoglutide）在第二型糖尿病的療效與安全性比較：系統性回顧與統合分析（AI 翻譯，請校對）</description>
+    <pubDate>Tue, 31 Mar 2026 17:33:00 GMT</pubDate>
+    <category>內分泌科</category>
+    <guid>https://sss50511165-cloud.github.io/yucezhu-site/medical/viewer.html?d=2026-04-11_01-33</guid>
+  </item>
+</channel>
+</rss>

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>雲端知識誌</title>
 <link rel="stylesheet" href="./assets/theme.css">
+<link rel="alternate" type="application/rss+xml" title="雲端知識誌" href="./feed.xml">
 <style>
   /* ── HERO BANNER ── */
   .hero-banner {
@@ -317,6 +318,10 @@
     <div class="highlight-grid" id="highlight-grid"></div>
   </div>
 
+  <div id="stats-bar" style="display:none; margin-bottom:48px;">
+    <div class="stats-grid" id="stats-grid"></div>
+  </div>
+
   <div class="dual">
 
     <!-- ── STOCKS ── -->
@@ -359,7 +364,9 @@
 <!-- ── FOOTER ── -->
 <footer class="site-footer index-footer">
   <div class="footer-left">© 2026 雲端知識誌 · 每日自動更新</div>
-  <div class="footer-right">Powered by Claude · Hosted on GitHub Pages</div>
+  <div class="footer-right">Powered by Claude · Hosted on GitHub Pages
+    <a href="./feed.xml" class="rss-link" target="_blank" aria-label="RSS Feed" title="RSS 訂閱"><svg width="14" height="14" viewBox="0 0 448 448" fill="currentColor"><path d="M64 400c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48zm0-192v80c70.7 0 128 57.3 128 128h80c0-114.9-93.1-208-208-208zm0-160v80c185 0 336 151 336 336h80C480 232.8 295.2 48 64 48z"/></svg></a>
+  </div>
 </footer>
 
 <script src="./assets/bookmarks.js"></script>
@@ -539,6 +546,42 @@
 
     grid.innerHTML = html;
     panel.style.display = '';
+
+    // ── Stats Dashboard ──
+    const totalMed = medItems.length;
+    const totalStock = stockFiles.length;
+    const total = totalMed + totalStock;
+    const now = new Date();
+    const thisMonth = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+    const thisMonthMed = medItems.filter(i => (i.pub_date || i.date || '').startsWith(thisMonth)).length;
+    const thisMonthStock = stockFiles.filter(f => f.replace('.json','').replace('.html','').startsWith(thisMonth)).length;
+    const thisMonthTotal = thisMonthMed + thisMonthStock;
+    const depts = new Set(medItems.map(i => i.department).filter(Boolean));
+
+    const statsGrid = document.getElementById('stats-grid');
+    const statsBar = document.getElementById('stats-bar');
+    statsGrid.innerHTML = `
+      <div class="stat-card">
+        <div class="stat-card-number">${total}</div>
+        <div class="stat-card-label-en">Total Articles</div>
+        <div class="stat-card-label-zh">累計文獻</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">${thisMonthTotal}</div>
+        <div class="stat-card-label-en">This Month</div>
+        <div class="stat-card-label-zh">本月新增</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">${depts.size}</div>
+        <div class="stat-card-label-en">Departments</div>
+        <div class="stat-card-label-zh">涵蓋科別</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">${totalStock}</div>
+        <div class="stat-card-label-en">Stock Reports</div>
+        <div class="stat-card-label-zh">股市摘要</div>
+      </div>`;
+    statsBar.style.display = '';
   }).catch(() => {});
 </script>
 

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>股市摘要 — 雲端知識誌</title>
 <link rel="stylesheet" href="../assets/theme.css">
+<link rel="alternate" type="application/rss+xml" title="雲端知識誌" href="../feed.xml">
 <style>
   .page-wrap {
     position: relative;
@@ -707,6 +708,12 @@
   }
 </script>
 
+<div class="nav-hint" id="nav-hint" style="display:none;">
+  <span id="nav-prev" class="nav-hint-item">← 上一篇</span>
+  <span class="nav-hint-divider">|</span>
+  <span id="nav-next" class="nav-hint-item">下一篇 →</span>
+</div>
+
 <button id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
 <script>
 (function(){
@@ -716,6 +723,52 @@
   });
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  let allDates = [];
+  const params = new URLSearchParams(window.location.search);
+  const currentDate = params.get('d') || '';
+
+  fetch('../stocks.json')
+    .then(r => r.json())
+    .then(data => {
+      const files = Array.isArray(data) ? data : (data.files || []);
+      allDates = files.map(f => f.replace('.json','').replace('.html','')).sort().reverse();
+
+      const idx = allDates.indexOf(currentDate);
+      const hint = document.getElementById('nav-hint');
+      if (hint && idx !== -1) {
+        hint.style.display = '';
+        const prev = document.getElementById('nav-prev');
+        const next = document.getElementById('nav-next');
+        if (idx >= allDates.length - 1) {
+          prev.classList.add('disabled');
+        } else {
+          prev.onclick = () => { window.location.href = './viewer.html?d=' + allDates[idx + 1]; };
+        }
+        if (idx <= 0) {
+          next.classList.add('disabled');
+        } else {
+          next.onclick = () => { window.location.href = './viewer.html?d=' + allDates[idx - 1]; };
+        }
+      }
+    })
+    .catch(() => {});
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (allDates.length === 0) return;
+    const idx = allDates.indexOf(currentDate);
+    if (idx === -1) return;
+    if (e.key === 'ArrowLeft' && idx < allDates.length - 1) {
+      window.location.href = './viewer.html?d=' + allDates[idx + 1];
+    } else if (e.key === 'ArrowRight' && idx > 0) {
+      window.location.href = './viewer.html?d=' + allDates[idx - 1];
+    }
   });
 })();
 </script>
