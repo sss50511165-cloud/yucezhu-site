@@ -41,12 +41,12 @@
 
   function hasSeenGuide() {
     try { return localStorage.getItem(STORAGE_KEY) === 'true'; }
-    catch { return false; }
+    catch(e) { return false; }
   }
 
   function markGuideSeen() {
     try { localStorage.setItem(STORAGE_KEY, 'true'); }
-    catch {}
+    catch(e) {}
   }
 
   let currentStep = 0;

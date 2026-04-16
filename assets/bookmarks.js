@@ -5,7 +5,7 @@
 
 function getBookmarks() {
   try { return JSON.parse(localStorage.getItem('site-bookmarks') || '[]'); }
-  catch { return []; }
+  catch(e) { return []; }
 }
 
 function saveBookmarks(arr) {
@@ -60,7 +60,7 @@ function migrateOldBookmarks() {
       });
       saveBookmarks(existing);
       localStorage.removeItem('med-bookmarks');
-    } catch {}
+    } catch(e) {}
   }
 }
 
