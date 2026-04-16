@@ -63,7 +63,13 @@
 
   .med-list li {
     opacity: 0;
-    animation: fadeUp 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    transform: translateY(16px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .med-list li.in-view {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .med-list a {
@@ -209,6 +215,9 @@
       <div class="kicker-en">All Articles</div>
       <div class="kicker-line"></div>
     </div>
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="搜尋關鍵字..." autocomplete="off">
+    </div>
     <ul class="med-list" id="medical-list">
       <li><div class="loading-row"><div class="loading-dot"></div><span>載入中...</span></div></li>
     </ul>
@@ -295,7 +304,6 @@
         const stars = `<span class="star-filled">${'★'.repeat(item.stars || 0)}</span><span class="star-empty">${'☆'.repeat(5 - (item.stars || 0))}</span>`;
         const icon = DEPT_MAP[item.department] || '🏥';
         const li = document.createElement('li');
-        li.style.animationDelay = `${i * 0.08}s`;
         li.innerHTML = `
           <a href="./viewer.html?d=${encodeURIComponent(key)}">
             <div class="card">
@@ -319,6 +327,49 @@
       document.getElementById('medical-list').innerHTML =
         '<li><div class="empty-state">無法載入資料，請稍後再試</div></li>';
     });
+
+  document.getElementById('search-input').addEventListener('input', function() {
+    const keyword = this.value.toLowerCase().trim();
+    document.querySelectorAll('#medical-list li').forEach(li => {
+      const text = li.textContent.toLowerCase();
+      li.style.display = text.includes(keyword) || keyword === '' ? '' : 'none';
+    });
+  });
+</script>
+
+<button id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
+<script>
+(function(){
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  const lists = document.querySelectorAll('.med-list');
+  const mo = new MutationObserver(() => {
+    document.querySelectorAll('.med-list li:not(.in-view)').forEach((li, i) => {
+      li.style.transitionDelay = `${i * 0.1}s`;
+      observer.observe(li);
+    });
+  });
+  lists.forEach(list => mo.observe(list, { childList: true }));
+})();
 </script>
 </body>
 </html>

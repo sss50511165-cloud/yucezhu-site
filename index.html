@@ -182,7 +182,13 @@
 
   .card-list li {
     opacity: 0;
-    animation: fadeUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    transform: translateY(16px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .card-list li.in-view {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .card-list a {
@@ -367,7 +373,7 @@
       sorted.forEach((file, i) => {
         const date = file.replace('.json', '').replace('.html', '');
         const li = document.createElement('li');
-        li.style.animationDelay = `${0.3 + i * 0.15}s`;
+
         li.innerHTML = `
           <a href="./stocks/viewer.html?d=${date}">
             <div class="card">
@@ -412,7 +418,7 @@
         const stars = `<span class="star-filled">${'★'.repeat(item.stars || 0)}</span><span class="star-empty">${'☆'.repeat(5 - (item.stars || 0))}</span>`;
         const icon = DEPT_MAP[item.department] || '🏥';
         const li = document.createElement('li');
-        li.style.animationDelay = `${0.3 + i * 0.15}s`;
+
         li.innerHTML = `
           <a href="./medical/viewer.html?d=${encodeURIComponent(key)}">
             <div class="card">
@@ -436,6 +442,41 @@
       document.getElementById('med-list').innerHTML =
         '<li><div class="empty-state">無法載入資料</div></li>';
     });
+</script>
+
+<button id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
+<script>
+(function(){
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  const lists = document.querySelectorAll('.card-list, #stock-list, #med-list');
+  const mo = new MutationObserver(() => {
+    document.querySelectorAll('.card-list li:not(.in-view)').forEach((li, i) => {
+      li.style.transitionDelay = `${i * 0.1}s`;
+      observer.observe(li);
+    });
+  });
+  lists.forEach(list => mo.observe(list, { childList: true }));
+})();
 </script>
 </body>
 </html>
