@@ -289,16 +289,21 @@
       });
 
       // === 科別篩選器 ===
+      const FIXED_DEPTS = ['心臟科', '內分泌科', '感染科', '腎臟科', '胸腔科'];
       const deptCounts = {};
+      FIXED_DEPTS.forEach(d => deptCounts[d] = 0);
       items.forEach(item => {
         const dept = item.department || '未分類';
         deptCounts[dept] = (deptCounts[dept] || 0) + 1;
       });
 
+      // 固定五大科在前，其餘排後面
+      const orderedDepts = [...FIXED_DEPTS, ...Object.keys(deptCounts).filter(d => !FIXED_DEPTS.includes(d))];
+
       const deptContainer = document.getElementById('dept-filter-container');
       let deptHTML = '<div class="dept-filters">';
       deptHTML += '<button class="dept-btn active" data-dept="all"><span><span class="dept-dot"></span>全部</span><span class="dept-count">' + items.length + '</span></button>';
-      Object.keys(deptCounts).forEach(dept => {
+      orderedDepts.forEach(dept => {
         deptHTML += '<button class="dept-btn" data-dept="' + dept + '"><span><span class="dept-dot"></span>' + dept + '</span><span class="dept-count">' + deptCounts[dept] + '</span></button>';
       });
       deptHTML += '</div>';
