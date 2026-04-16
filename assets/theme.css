@@ -654,6 +654,65 @@ body::after {
 .up   { color: var(--up); }
 .down { color: var(--down); }
 
+/* ── DEPARTMENT FILTERS ── */
+.dept-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dept-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 0.5px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.dept-btn:last-child {
+  border-bottom: none;
+}
+
+.dept-btn:hover {
+  color: var(--accent);
+}
+
+.dept-btn.active {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.dept-btn .dept-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 10px;
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dept-btn.active .dept-dot {
+  opacity: 1;
+}
+
+.dept-btn .dept-count {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-tertiary);
+}
+
 /* ── SEARCH BOX ── */
 .search-box {
   margin-bottom: 24px;

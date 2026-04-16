@@ -91,40 +91,6 @@
     animation: fadeUp 0.7s 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) both;
   }
 
-  .dept-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 0.5px solid var(--border-color);
-    font-family: 'Noto Serif TC', serif;
-    font-size: 13px;
-    font-weight: 300;
-  }
-
-  .dept-item:last-child { border-bottom: none; }
-
-  .dept-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin-right: 10px;
-    flex-shrink: 0;
-  }
-
-  .dept-name {
-    color: var(--text-primary);
-    flex: 1;
-  }
-
-  .dept-count {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 11px;
-    font-style: italic;
-    color: var(--text-tertiary);
-    letter-spacing: 1px;
-  }
-
   .notice-box {
     padding: 14px 16px;
     background: rgba(212, 177, 86, 0.04);
@@ -244,12 +210,10 @@
     <!-- DEPT -->
     <div class="sidebar-card">
       <div class="sidebar-card-head">Departments</div>
-      <div class="sidebar-card-body">
-        <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">心臟科</span><span class="dept-count">mod 5 = 0</span></div>
-        <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">內分泌科</span><span class="dept-count">mod 5 = 1</span></div>
-        <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">感染科</span><span class="dept-count">mod 5 = 2</span></div>
-        <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">腎臟科</span><span class="dept-count">mod 5 = 3</span></div>
-        <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">胸腔科</span><span class="dept-count">mod 5 = 4</span></div>
+      <div class="sidebar-card-body" id="dept-filter-container">
+        <div class="dept-filters">
+          <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">載入中...</span></div>
+        </div>
       </div>
     </div>
 
@@ -304,6 +268,7 @@
         const stars = `<span class="star-filled">${'★'.repeat(item.stars || 0)}</span><span class="star-empty">${'☆'.repeat(5 - (item.stars || 0))}</span>`;
         const icon = DEPT_MAP[item.department] || '🏥';
         const li = document.createElement('li');
+        li.dataset.dept = item.department || '';
         li.innerHTML = `
           <a href="./viewer.html?d=${encodeURIComponent(key)}">
             <div class="card">
@@ -322,19 +287,71 @@
           </a>`;
         list.appendChild(li);
       });
+
+      // === 科別篩選器 ===
+      const deptCounts = {};
+      items.forEach(item => {
+        const dept = item.department || '未分類';
+        deptCounts[dept] = (deptCounts[dept] || 0) + 1;
+      });
+
+      const deptContainer = document.getElementById('dept-filter-container');
+      let deptHTML = '<div class="dept-filters">';
+      deptHTML += '<button class="dept-btn active" data-dept="all"><span><span class="dept-dot"></span>全部</span><span class="dept-count">' + items.length + '</span></button>';
+      Object.keys(deptCounts).forEach(dept => {
+        deptHTML += '<button class="dept-btn" data-dept="' + dept + '"><span><span class="dept-dot"></span>' + dept + '</span><span class="dept-count">' + deptCounts[dept] + '</span></button>';
+      });
+      deptHTML += '</div>';
+      deptContainer.innerHTML = deptHTML;
+
+      const selectedDepts = new Set();
+
+      deptContainer.addEventListener('click', (e) => {
+        const btn = e.target.closest('.dept-btn');
+        if (!btn) return;
+        const dept = btn.dataset.dept;
+
+        if (dept === 'all') {
+          selectedDepts.clear();
+          deptContainer.querySelectorAll('.dept-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        } else {
+          const allBtn = deptContainer.querySelector('[data-dept="all"]');
+          allBtn.classList.remove('active');
+
+          if (selectedDepts.has(dept)) {
+            selectedDepts.delete(dept);
+            btn.classList.remove('active');
+          } else {
+            selectedDepts.add(dept);
+            btn.classList.add('active');
+          }
+
+          if (selectedDepts.size === 0) {
+            allBtn.classList.add('active');
+          }
+        }
+
+        applyFilters();
+      });
+
+      function applyFilters() {
+        const keyword = (document.getElementById('search-input').value || '').toLowerCase().trim();
+        document.querySelectorAll('#medical-list li').forEach(li => {
+          const text = li.textContent.toLowerCase();
+          const liDept = li.dataset.dept || '';
+          const matchKeyword = keyword === '' || text.includes(keyword);
+          const matchDept = selectedDepts.size === 0 || selectedDepts.has(liDept);
+          li.style.display = (matchKeyword && matchDept) ? '' : 'none';
+        });
+      }
+
+      document.getElementById('search-input').addEventListener('input', applyFilters);
     })
     .catch(() => {
       document.getElementById('medical-list').innerHTML =
         '<li><div class="empty-state">無法載入資料，請稍後再試</div></li>';
     });
-
-  document.getElementById('search-input').addEventListener('input', function() {
-    const keyword = this.value.toLowerCase().trim();
-    document.querySelectorAll('#medical-list li').forEach(li => {
-      const text = li.textContent.toLowerCase();
-      li.style.display = text.includes(keyword) || keyword === '' ? '' : 'none';
-    });
-  });
 </script>
 
 <button id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
