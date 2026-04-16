@@ -14,7 +14,7 @@
   --border-color: rgba(201, 147, 91, 0.2);
   --border-hover: rgba(201, 147, 91, 0.5);
   --text-primary: #D2CCC4;
-  --text-secondary: #ADA7A0;
+  --text-secondary: #B8B2AB;
   --text-tertiary: #A08E78;
   --accent: #C9935B;
   --accent-light: #D9A676;
@@ -31,7 +31,7 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 15px;
   line-height: 1.7;
   min-height: 100vh;
@@ -238,7 +238,7 @@ body::after {
 .card-excerpt {
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.9;
   color: var(--text-secondary);
 }
@@ -422,7 +422,7 @@ body::after {
   font-size: 15px;
   vertical-align: top;
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .info-table td:first-child {
@@ -456,10 +456,10 @@ body::after {
   gap: 14px;
   align-items: flex-start;
   font-size: 16px;
-  line-height: 1.9;
+  line-height: 2.0;
   color: var(--text-primary);
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .point-marker {
@@ -502,7 +502,7 @@ body::after {
   padding: 20px 24px;
   font-size: 15px;
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text-tertiary);
   line-height: 1.9;
 }
