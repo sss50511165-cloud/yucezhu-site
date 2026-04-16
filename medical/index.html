@@ -244,58 +244,26 @@
   <div class="footer-right">Powered by Claude · Hosted on GitHub Pages</div>
 </footer>
 
+<script src="../assets/bookmarks.js"></script>
 <script>
   const DEPT_MAP = {
     '心臟科': '❤️', '內分泌科': '🔬', '感染科': '🦠',
     '腎臟科': '💧', '胸腔科': '🫁'
   };
 
-  // === 收藏功能 ===
-  function getBookmarks() {
-    try { return JSON.parse(localStorage.getItem('med-bookmarks') || '[]'); }
-    catch { return []; }
-  }
-  function saveBookmarks(arr) {
-    localStorage.setItem('med-bookmarks', JSON.stringify(arr));
-  }
-  function isBookmarked(key) {
-    return getBookmarks().includes(key);
-  }
-  function toggleBookmark(key, btn) {
-    let bm = getBookmarks();
-    if (bm.includes(key)) {
-      bm = bm.filter(k => k !== key);
-      btn.textContent = '☆';
-      btn.classList.remove('bookmarked');
-      btn.closest('.card').classList.remove('card-bookmarked');
-    } else {
-      bm.push(key);
-      btn.textContent = '★';
-      btn.classList.add('bookmarked');
-      btn.closest('.card').classList.add('card-bookmarked');
-    }
-    saveBookmarks(bm);
-    updateBookmarkPanel();
-  }
   function updateBookmarkPanel() {
-    const bm = getBookmarks();
+    const bm = getBookmarks().filter(b => b.type === 'medical');
     const panel = document.getElementById('bookmark-panel');
     const list = document.getElementById('bookmark-list');
+    if (!panel || !list) return;
     if (bm.length === 0) { panel.style.display = 'none'; return; }
     panel.style.display = '';
     let html = '<div class="bookmark-items">';
-    bm.forEach(key => {
-      const card = document.querySelector(`.bookmark-btn[data-key="${key}"]`);
-      if (card) {
-        const cardEl = card.closest('.card');
-        const title = cardEl.querySelector('.card-title')?.textContent || key;
-        const dept = cardEl.querySelector('.card-tag')?.textContent || '';
-        const date = cardEl.querySelector('.card-date')?.textContent || '';
-        html += `<a href="./viewer.html?d=${encodeURIComponent(key)}" class="bookmark-item">
-          <div class="bookmark-item-title">${title}</div>
-          <div class="bookmark-item-meta">${dept} · ${date}</div>
-        </a>`;
-      }
+    bm.forEach(b => {
+      html += `<a href="${b.url}" class="bookmark-item">
+        <div class="bookmark-item-title">${b.title}</div>
+        <div class="bookmark-item-meta">${b.dept ? b.dept + ' · ' : ''}${b.date}</div>
+      </a>`;
     });
     html += '</div>';
     html += '<div class="bookmark-hint">收藏存在瀏覽器中，不需登入</div>';
@@ -327,6 +295,8 @@
         const icon = DEPT_MAP[item.department] || '🏥';
         const textLength = ((item.title_zh || '') + (item.summary || '')).length;
         const readMin = Math.max(1, Math.round(textLength / 400));
+        const medInfo = { type:'medical', title:item.summary||item.title_zh||'', dept:item.department||'', date:item.pub_date||item.date, url:'./viewer.html?d='+encodeURIComponent(key) };
+        const infoAttr = JSON.stringify(medInfo).replace(/"/g, '&quot;');
         const li = document.createElement('li');
         li.dataset.dept = item.department || '';
         li.innerHTML = `
@@ -346,7 +316,7 @@
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
                   <div class="card-stars">${stars}</div>
-                  <button class="bookmark-btn" data-key="${key}" aria-label="收藏" onclick="event.preventDefault(); event.stopPropagation(); toggleBookmark('${key}', this);">☆</button>
+                  <button class="bookmark-btn" data-key="${key}" aria-label="收藏" onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${key}',${infoAttr},this);">☆</button>
                 </div>
               </div>
             </div>

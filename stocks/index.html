@@ -186,6 +186,11 @@
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
+    <div class="sidebar-card" id="bookmark-panel" style="display:none;">
+      <div class="sidebar-card-head">My Bookmarks</div>
+      <div class="sidebar-card-body" id="bookmark-list"></div>
+    </div>
+
     <div class="sidebar-card">
       <div class="sidebar-card-head">Statistics</div>
       <div class="sidebar-card-body">
@@ -217,7 +222,27 @@
   <div class="footer-right">Powered by Claude · Hosted on GitHub Pages</div>
 </footer>
 
+<script src="../assets/bookmarks.js"></script>
 <script>
+  function updateBookmarkPanel() {
+    const bm = getBookmarks().filter(b => b.type === 'stock');
+    const panel = document.getElementById('bookmark-panel');
+    const list = document.getElementById('bookmark-list');
+    if (!panel || !list) return;
+    if (bm.length === 0) { panel.style.display = 'none'; return; }
+    panel.style.display = '';
+    let html = '<div class="bookmark-items">';
+    bm.forEach(b => {
+      html += `<a href="./viewer.html?d=${encodeURIComponent(b.key)}" class="bookmark-item">
+        <div class="bookmark-item-title">${b.title}</div>
+        <div class="bookmark-item-meta">${b.date}</div>
+      </a>`;
+    });
+    html += '</div>';
+    html += '<div class="bookmark-hint">收藏存在瀏覽器中，不需登入</div>';
+    list.innerHTML = html;
+  }
+
   fetch('../stocks.json')
     .then(r => r.json())
     .then(data => {
@@ -239,6 +264,8 @@
 
       sorted.forEach((file, i) => {
         const date = file.replace('.json', '').replace('.html', '');
+        const stockInfo = { type:'stock', title:'股市摘要 — '+date, dept:'', date:date, url:'./viewer.html?d='+date };
+        const infoAttr = JSON.stringify(stockInfo).replace(/"/g, '&quot;');
         const li = document.createElement('li');
         li.innerHTML = `
           <a href="./viewer.html?d=${date}">
@@ -250,11 +277,25 @@
               <div class="card-title">股市摘要 — ${date}</div>
               <div class="card-rule"></div>
               <div class="card-excerpt">台股美股每日重點事件整理，掌握市場動態。</div>
-              <div class="card-read">閱讀全文 <span class="arrow">→</span></div>
+              <div class="card-header" style="margin-top:14px; margin-bottom:0;">
+                <div style="display:flex;align-items:center;">
+                  <span class="card-read">閱讀全文 <span class="arrow">→</span></span>
+                  <span class="card-readtime">⏱ 約 3 分鐘</span>
+                </div>
+                <button class="bookmark-btn" data-key="${date}" aria-label="收藏" onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${date}',${infoAttr},this);">☆</button>
+              </div>
             </div>
           </a>`;
         list.appendChild(li);
+
+        if (isBookmarked(date)) {
+          const btn = li.querySelector('.bookmark-btn');
+          if (btn) { btn.textContent = '★'; btn.classList.add('bookmarked'); }
+          li.querySelector('.card')?.classList.add('card-bookmarked');
+        }
       });
+
+      updateBookmarkPanel();
     })
     .catch(() => {
       document.getElementById('stock-list').innerHTML =

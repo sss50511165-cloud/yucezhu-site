@@ -353,6 +353,7 @@
   <div class="footer-right">Powered by Claude · Hosted on GitHub Pages</div>
 </footer>
 
+<script src="./assets/bookmarks.js"></script>
 <script>
   const MAX_ITEMS = 5;
 
@@ -372,6 +373,8 @@
 
       sorted.forEach((file, i) => {
         const date = file.replace('.json', '').replace('.html', '');
+        const stockInfo = { type:'stock', title:'股市摘要 — '+date, dept:'', date:date, url:'./stocks/viewer.html?d='+date };
+        const infoAttr = JSON.stringify(stockInfo).replace(/"/g, '&quot;');
         const li = document.createElement('li');
 
         li.innerHTML = `
@@ -384,43 +387,28 @@
               <div class="card-title">股市摘要 — ${date}</div>
               <div class="card-rule"></div>
               <div class="card-excerpt">台股美股每日重點事件整理，掌握市場動態。</div>
-              <div class="card-read">閱讀全文 <span class="arrow">→</span></div>
+              <div class="card-header" style="margin-top:14px; margin-bottom:0;">
+                <div style="display:flex;align-items:center;">
+                  <span class="card-read">閱讀全文 <span class="arrow">→</span></span>
+                  <span class="card-readtime">⏱ 約 3 分鐘</span>
+                </div>
+                <button class="bookmark-btn" data-key="${date}" aria-label="收藏" onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${date}',${infoAttr},this);">☆</button>
+              </div>
             </div>
           </a>`;
         list.appendChild(li);
+
+        if (isBookmarked(date)) {
+          const btn = li.querySelector('.bookmark-btn');
+          if (btn) { btn.textContent = '★'; btn.classList.add('bookmarked'); }
+          li.querySelector('.card')?.classList.add('card-bookmarked');
+        }
       });
     })
     .catch(() => {
       document.getElementById('stock-list').innerHTML =
         '<li><div class="empty-state">無法載入資料</div></li>';
     });
-
-  // ── Bookmark helpers ──
-  function getBookmarks() {
-    try { return JSON.parse(localStorage.getItem('med-bookmarks') || '[]'); }
-    catch { return []; }
-  }
-  function saveBookmarks(arr) {
-    localStorage.setItem('med-bookmarks', JSON.stringify(arr));
-  }
-  function isBookmarked(key) {
-    return getBookmarks().includes(key);
-  }
-  function toggleBookmark(key, btn) {
-    let bm = getBookmarks();
-    if (bm.includes(key)) {
-      bm = bm.filter(k => k !== key);
-      btn.textContent = '☆';
-      btn.classList.remove('bookmarked');
-      btn.closest('.card').classList.remove('card-bookmarked');
-    } else {
-      bm.push(key);
-      btn.textContent = '★';
-      btn.classList.add('bookmarked');
-      btn.closest('.card').classList.add('card-bookmarked');
-    }
-    saveBookmarks(bm);
-  }
 
   // ── Medical list ──
   const DEPT_MAP = {
@@ -446,6 +434,8 @@
         const icon = DEPT_MAP[item.department] || '🏥';
         const textLength = ((item.title_zh || '') + (item.summary || '')).length;
         const readMin = Math.max(1, Math.round(textLength / 400));
+        const medInfo = { type:'medical', title:item.summary||item.title_zh||'', dept:item.department||'', date:item.pub_date||item.date, url:'./medical/viewer.html?d='+encodeURIComponent(key) };
+        const infoAttr = JSON.stringify(medInfo).replace(/"/g, '&quot;');
         const li = document.createElement('li');
 
         li.innerHTML = `
@@ -465,7 +455,7 @@
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
                   <div class="card-stars">${stars}</div>
-                  <button class="bookmark-btn" data-key="${key}" aria-label="收藏" onclick="event.preventDefault(); event.stopPropagation(); toggleBookmark('${key}', this);">☆</button>
+                  <button class="bookmark-btn" data-key="${key}" aria-label="收藏" onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${key}',${infoAttr},this);">☆</button>
                 </div>
               </div>
             </div>
@@ -474,11 +464,8 @@
 
         if (isBookmarked(key)) {
           const btn = li.querySelector('.bookmark-btn');
-          if (btn) {
-            btn.textContent = '★';
-            btn.classList.add('bookmarked');
-          }
-          li.querySelector('.card').classList.add('card-bookmarked');
+          if (btn) { btn.textContent = '★'; btn.classList.add('bookmarked'); }
+          li.querySelector('.card')?.classList.add('card-bookmarked');
         }
       });
     })
