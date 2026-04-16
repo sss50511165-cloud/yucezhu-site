@@ -258,6 +258,7 @@
   <div class="footer-left">© 2026 雲端知識誌 · 每日自動更新</div>
   <div class="footer-right">Powered by Claude · Hosted on GitHub Pages
     <a href="../feed.xml" class="rss-link" target="_blank" aria-label="RSS Feed" title="RSS 訂閱"><svg width="14" height="14" viewBox="0 0 448 448" fill="currentColor"><path d="M64 400c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48zm0-192v80c70.7 0 128 57.3 128 128h80c0-114.9-93.1-208-208-208zm0-160v80c185 0 336 151 336 336h80C480 232.8 295.2 48 64 48z"/></svg></a>
+    <a href="javascript:void(0)" class="guide-trigger" onclick="if(window.startGuide)window.startGuide();" title="使用指南">?</a>
   </div>
 </footer>
 
@@ -326,9 +327,14 @@
         li.dataset.dept = item.department || '';
         li.dataset.date = item.pub_date || item.date || '';
         li.dataset.stars = item.stars || 0;
+        const titleEsc = (item.summary || item.title_zh || '').replace(/"/g, '&quot;');
         li.innerHTML = `
           <a href="./viewer.html?d=${encodeURIComponent(key)}">
             <div class="card">
+              <label class="compare-check" onclick="event.stopPropagation();">
+                <input type="checkbox" class="compare-checkbox" data-key="${key}" data-title="${titleEsc}" onchange="updateCompareBar()">
+                <span class="compare-checkmark"></span>
+              </label>
               <div class="card-header">
                 <div class="card-tag">${icon} ${item.department}</div>
                 <div class="card-date">${item.pub_date || item.date}</div>
@@ -474,5 +480,65 @@
   lists.forEach(list => mo.observe(list, { childList: true }));
 })();
 </script>
+<div class="compare-bar" id="compare-bar" style="display:none;">
+  <div class="compare-bar-inner">
+    <div class="compare-bar-info">
+      <span class="compare-bar-count" id="compare-count">0</span>
+      <span class="compare-bar-text">篇已選取（最多 3 篇）</span>
+    </div>
+    <div class="compare-bar-actions">
+      <button class="compare-bar-clear" onclick="clearCompare()">清除</button>
+      <button class="compare-bar-go" id="compare-go-btn" onclick="goCompare()" disabled>開始比較</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function getSelectedKeys() {
+  const checked = document.querySelectorAll('.compare-checkbox:checked');
+  return Array.from(checked).map(cb => cb.dataset.key);
+}
+
+function updateCompareBar() {
+  const keys = getSelectedKeys();
+  const bar = document.getElementById('compare-bar');
+  const count = document.getElementById('compare-count');
+  const goBtn = document.getElementById('compare-go-btn');
+
+  if (keys.length >= 3) {
+    document.querySelectorAll('.compare-checkbox:not(:checked)').forEach(cb => {
+      cb.disabled = true;
+    });
+  } else {
+    document.querySelectorAll('.compare-checkbox').forEach(cb => {
+      cb.disabled = false;
+    });
+  }
+
+  if (keys.length > 0) {
+    bar.style.display = '';
+    count.textContent = keys.length;
+    goBtn.disabled = keys.length < 2;
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+function clearCompare() {
+  document.querySelectorAll('.compare-checkbox').forEach(cb => {
+    cb.checked = false;
+    cb.disabled = false;
+  });
+  updateCompareBar();
+}
+
+function goCompare() {
+  const keys = getSelectedKeys();
+  if (keys.length < 2) return;
+  window.location.href = './compare.html?items=' + keys.map(k => encodeURIComponent(k)).join(',');
+}
+</script>
+
+<script src="../assets/guide.js"></script>
 </body>
 </html>

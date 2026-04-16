@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文獻對比 — 雲端知識誌</title>
+<link rel="stylesheet" href="../assets/theme.css">
+<link rel="alternate" type="application/rss+xml" title="雲端知識誌" href="../feed.xml">
+<style>
+  .compare-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+
+  .compare-grid {
+    display: grid;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .compare-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .compare-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .compare-column {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .compare-column-head {
+    padding: 20px;
+    border-bottom: 0.5px solid var(--border-color);
+  }
+
+  .compare-column-head .card-tag {
+    margin-bottom: 8px;
+  }
+
+  .compare-column-title {
+    font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  .compare-column-meta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .compare-section {
+    padding: 16px 20px;
+    border-bottom: 0.5px solid var(--border-color);
+  }
+
+  .compare-section:last-child {
+    border-bottom: none;
+  }
+
+  .compare-section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .compare-section-content {
+    font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+
+  .compare-section-content ul {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .compare-section-content li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .compare-section-content li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 10px;
+    flex-shrink: 0;
+  }
+
+  .compare-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    margin-bottom: 24px;
+    transition: color 0.3s ease;
+  }
+
+  .compare-back:hover {
+    color: var(--accent);
+  }
+
+  .compare-stars {
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  .compare-view-full {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 8px 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .compare-view-full:hover {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .compare-page { padding: 24px 16px 60px; }
+    .compare-grid.cols-2,
+    .compare-grid.cols-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button id="theme-toggle" aria-label="切換明暗模式" style="
+  position: fixed; top: 16px; right: 16px; z-index: 1000;
+  background: var(--bg-card); border: 0.5px solid var(--border-color);
+  border-radius: 50%; width: 40px; height: 40px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--accent); transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+" onclick="
+  const t = document.documentElement.dataset.theme === 'light' ? '' : 'light';
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('theme', t);
+  this.textContent = t === 'light' ? '🌙' : '☀️';
+">☀️</button>
+<script>
+(function(){
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.dataset.theme = saved;
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = saved === 'light' ? '🌙' : '☀️';
+  }
+})();
+</script>
+
+<nav class="site-nav">
+  <a class="nav-logo" href="../">
+    <div class="nav-logo-mark"><span>誌</span></div>
+    <div class="nav-logo-title">
+      <span class="t-zh">雲端</span>
+      <span class="t-brand">知識誌</span>
+    </div>
+  </a>
+  <a class="nav-back" href="./index.html">← 返回文獻列表</a>
+</nav>
+
+<div class="compare-page">
+  <a href="./index.html" class="compare-back">← 返回文獻列表</a>
+
+  <div class="kicker" style="margin-bottom: 24px;">
+    <div class="kicker-en">Compare Articles</div>
+    <div class="kicker-zh">文獻對比</div>
+    <div class="kicker-line"></div>
+  </div>
+
+  <div id="compare-container">
+    <div class="loading-row"><div class="loading-dot"></div><span>載入中...</span></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-left">© 2026 雲端知識誌 · AI 整理，非醫療建議</div>
+  <div class="footer-right">Powered by Claude · Hosted on GitHub Pages</div>
+</footer>
+
+<script>
+  const DEPT_MAP = {
+    '心臟科': '❤️', '內分泌科': '🔬', '感染科': '🦠',
+    '腎臟科': '💧', '胸腔科': '🫁'
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const itemKeys = (params.get('items') || '').split(',').map(k => decodeURIComponent(k)).filter(Boolean);
+
+  if (itemKeys.length < 2) {
+    document.getElementById('compare-container').innerHTML =
+      '<div class="empty-state">請從文獻列表選取 2-3 篇文獻進行對比</div>';
+  } else {
+    Promise.all(itemKeys.map(key =>
+      fetch(`./${key}.json`).then(r => r.json()).catch(() => null)
+    )).then(results => {
+      const articles = results.filter(Boolean);
+
+      if (articles.length < 2) {
+        document.getElementById('compare-container').innerHTML =
+          '<div class="empty-state">無法載入足夠的文獻資料</div>';
+        return;
+      }
+
+      const cols = articles.length;
+      let html = `<div class="compare-grid cols-${cols}">`;
+
+      articles.forEach((d, i) => {
+        const key = itemKeys[i];
+        const dept = d.department || '';
+        const icon = DEPT_MAP[dept] || '📋';
+        const p = d.paper || {};
+        const design = d.design || {};
+        const rating = d.rating || {};
+        const stars = '★'.repeat(rating.stars || 0) + '☆'.repeat(5 - (rating.stars || 0));
+
+        html += `
+          <div class="compare-column">
+            <div class="compare-column-head">
+              <div class="card-tag">${icon} ${dept}</div>
+              <div class="compare-column-title">${d.summary || p.title_zh || ''}</div>
+              <div class="compare-column-meta">
+                <span>${p.published || d.date || ''}</span>
+                <span>${p.journal || ''}</span>
+                <span class="compare-stars">${stars}</span>
+              </div>
+            </div>
+
+            <div class="compare-section">
+              <div class="compare-section-label">Original Title</div>
+              <div class="compare-section-content" style="font-size:13px; font-style:italic; color:var(--text-tertiary);">
+                ${p.title_en || '—'}
+              </div>
+            </div>
+
+            <div class="compare-section">
+              <div class="compare-section-label">Study Design</div>
+              <div class="compare-section-content">
+                ${design.type ? '<div style="color:var(--accent);font-size:13px;letter-spacing:1px;margin-bottom:6px;">' + design.type.toUpperCase() + '</div>' : ''}
+                ${design.note || '—'}
+              </div>
+            </div>
+
+            <div class="compare-section">
+              <div class="compare-section-label">Key Findings</div>
+              <div class="compare-section-content">
+                ${d.findings && d.findings.length > 0
+                  ? '<ul>' + d.findings.map(f => '<li><span>' + f + '</span></li>').join('') + '</ul>'
+                  : '—'}
+              </div>
+            </div>
+
+            <div class="compare-section">
+              <div class="compare-section-label">Clinical Significance</div>
+              <div class="compare-section-content">
+                ${d.clinical_points && d.clinical_points.length > 0
+                  ? '<ul>' + d.clinical_points.map(c => '<li><span>' + c + '</span></li>').join('') + '</ul>'
+                  : '—'}
+              </div>
+            </div>
+
+            <div class="compare-section">
+              <div class="compare-section-label">Study Info</div>
+              <div class="compare-section-content" style="font-size:13px;">
+                <div>期刊：${p.journal || '—'}</div>
+                <div>PMID：${p.pmid || '—'}</div>
+                ${design.type ? '<div>研究類型：' + design.type + '</div>' : ''}
+                ${d.keywords && d.keywords.length > 0
+                  ? '<div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:4px;">' +
+                    d.keywords.map(k => '<span class="keyword-tag">' + k + '</span>').join('') +
+                    '</div>'
+                  : ''}
+              </div>
+            </div>
+
+            <div class="compare-section" style="text-align:center;">
+              <a href="./viewer.html?d=${encodeURIComponent(key)}" class="compare-view-full">
+                閱讀完整文獻 →
+              </a>
+            </div>
+          </div>`;
+      });
+
+      html += '</div>';
+      document.getElementById('compare-container').innerHTML = html;
+    });
+  }
+</script>
+
+<button id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
+<script>
+(function(){
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+</body>
+</html>
