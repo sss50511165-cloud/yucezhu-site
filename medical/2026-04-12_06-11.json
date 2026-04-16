@@ -1,0 +1,42 @@
+{
+  "date": "2026-04-12",
+  "time": "06:11",
+  "department": "感染科",
+  "summary": "敗血症存活者PICS盛行率逾九成，早期介入可改善預後",
+  "paper": {
+    "title_en": "Analysis of the prevalence and risk factors of post-intensive-care syndrome and post-sepsis syndrome in survivors of sepsis",
+    "title_zh": "敗血症存活者之加護病房後症候群與敗血症後症候群的盛行率及危險因子分析（AI 翻譯，請校對）",
+    "journal": "Science Progress",
+    "impact_factor": "請至 JCR 手動確認",
+    "published": "2026-04-11",
+    "pmid": "41964381",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41964381/"
+  },
+  "design": {
+    "type": "prospective cohort",
+    "note": "前瞻性世代研究，收錄濟寧醫科大學附屬醫院（2024年4月至2025年7月）之敗血症/敗血性休克存活者，於出院後1個月及3個月進行追蹤評估。"
+  },
+  "findings": [
+    "PICS（加護病房後症候群）盛行率達 93.2–98.6%",
+    "PSS（敗血症後症候群）盛行率為 61.4–77.6%",
+    "PSS 獨立預測因子包括：BMI、紅血球計數（RBC）、氧分壓（PO2）及球蛋白（globulin）水平",
+    "PICS 嚴重度預測因子包括：Glasgow 昏迷量表評分、靜脈血栓栓塞風險、碳酸氫鹽（bicarbonate）水平及感染部位"
+  ],
+  "clinical_points": [
+    "敗血症存活者中 PICS 盛行率極高（逾93%），臨床需重視 ICU 出院後的系統性追蹤",
+    "PSS 獨立預測因子（BMI、RBC、PO2、globulin）可輔助臨床早期識別高風險患者",
+    "研究建議早期多專科介入，可能減少長期後遺症並改善恢復軌跡"
+  ],
+  "keywords": ["敗血症", "加護病房後症候群", "敗血症後症候群"],
+  "rating": {
+    "stars": 3,
+    "reason": "前瞻性世代研究設計，單一中心，Science Progress 為中等影響力期刊；臨床議題重要但推廣性有限"
+  },
+  "verification": {
+    "pmid_checked": true,
+    "title_matched": true,
+    "date_in_range": true
+  },
+  "source": ["PubMed"],
+  "generated": "2026-04-12 06:11"
+}
