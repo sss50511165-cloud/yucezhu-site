@@ -181,6 +181,15 @@
       <div class="kicker-en">All Articles</div>
       <div class="kicker-line"></div>
     </div>
+    <div class="year-month-filter" id="ym-filter" style="display:none;">
+      <div class="year-tabs" id="year-tabs"></div>
+      <div class="month-pills" id="month-pills"></div>
+      <div class="filter-status" id="filter-status" style="display:none;">
+        <span class="status-text" id="filter-text"></span>
+        <span class="status-count" id="filter-count"></span>
+        <button class="filter-clear" id="filter-clear" onclick="clearYMFilter()">清除篩選</button>
+      </div>
+    </div>
     <div class="search-box">
       <input type="text" id="search-input" placeholder="搜尋關鍵字..." autocomplete="off">
     </div>
@@ -245,6 +254,7 @@
 </footer>
 
 <script src="../assets/bookmarks.js"></script>
+<script src="../assets/ym-filter.js"></script>
 <script>
   const DEPT_MAP = {
     '心臟科': '❤️', '內分泌科': '🔬', '感染科': '🦠',
@@ -299,6 +309,7 @@
         const infoAttr = JSON.stringify(medInfo).replace(/"/g, '&quot;');
         const li = document.createElement('li');
         li.dataset.dept = item.department || '';
+        li.dataset.date = item.pub_date || item.date || '';
         li.innerHTML = `
           <a href="./viewer.html?d=${encodeURIComponent(key)}">
             <div class="card">
@@ -390,13 +401,19 @@
         document.querySelectorAll('#medical-list li').forEach(li => {
           const text = li.textContent.toLowerCase();
           const liDept = li.dataset.dept || '';
+          const date = li.dataset.date || '';
           const matchKeyword = keyword === '' || text.includes(keyword);
           const matchDept = selectedDepts.size === 0 || selectedDepts.has(liDept);
-          li.style.display = (matchKeyword && matchDept) ? '' : 'none';
+          const matchDate = matchYM(date);
+          li.style.display = (matchKeyword && matchDept && matchDate) ? '' : 'none';
         });
       }
 
+      const allDates = items.map(item => item.pub_date || item.date);
+      initYMFilter(allDates, '#medical-list', applyFilters);
+
       document.getElementById('search-input').addEventListener('input', applyFilters);
+      document.addEventListener('ym-clear', () => { applyFilters(); });
 
       updateBookmarkPanel();
     })

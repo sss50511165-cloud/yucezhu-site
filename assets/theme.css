@@ -747,6 +747,155 @@ body::after {
   opacity: 0.7;
 }
 
+/* ── TODAY'S HIGHLIGHT ── */
+.highlight-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.highlight-card {
+  position: relative;
+}
+
+.highlight-card .card {
+  border-color: rgba(201, 147, 91, 0.35);
+}
+
+.highlight-badge {
+  position: absolute;
+  top: -1px;
+  left: 24px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  padding: 3px 10px;
+  border-radius: 0 0 3px 3px;
+  z-index: 1;
+}
+
+/* ── YEAR-MONTH FILTER ── */
+.year-month-filter {
+  margin-bottom: 24px;
+}
+
+.year-tabs {
+  display: flex;
+  background: var(--bg-card);
+  border: 0.5px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+
+.year-tab {
+  padding: 8px 18px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  border-right: 0.5px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.year-tab:last-child {
+  border-right: none;
+}
+
+.year-tab:hover {
+  color: var(--accent);
+}
+
+.year-tab.active {
+  color: var(--accent);
+  background: rgba(201, 147, 91, 0.1);
+  font-weight: 500;
+}
+
+.month-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.month-pill {
+  padding: 6px 14px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+  background: var(--bg-card);
+  border: 0.5px solid var(--border-color);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.month-pill:hover:not(.disabled) {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.month-pill.active {
+  color: var(--accent);
+  background: rgba(201, 147, 91, 0.1);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
+.month-pill.disabled {
+  color: var(--text-tertiary);
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: var(--bg-primary);
+}
+
+.filter-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.filter-status .status-text {
+  color: var(--text-tertiary);
+}
+
+.filter-status .status-count {
+  color: var(--accent);
+}
+
+.filter-clear {
+  color: var(--text-tertiary);
+  cursor: pointer;
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+.filter-clear:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 860px) {
+  .highlight-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ── DEPARTMENT FILTERS ── */
 .dept-filters {
   display: flex;

@@ -308,6 +308,15 @@
 
   <div class="accent-bar" style="margin-bottom: 56px;"></div>
 
+  <div id="today-highlight" style="display:none; margin-bottom: 48px;">
+    <div class="kicker" style="margin-bottom: 20px;">
+      <div class="kicker-en">Today's Highlight</div>
+      <div class="kicker-zh">今日精選</div>
+      <div class="kicker-line"></div>
+    </div>
+    <div class="highlight-grid" id="highlight-grid"></div>
+  </div>
+
   <div class="dual">
 
     <!-- ── STOCKS ── -->
@@ -473,6 +482,64 @@
       document.getElementById('med-list').innerHTML =
         '<li><div class="empty-state">無法載入資料</div></li>';
     });
+
+  // ── Today's Highlight ──
+  Promise.all([
+    fetch('./stocks.json').then(r => r.json()),
+    fetch('./medical.json').then(r => r.json())
+  ]).then(([stockData, medData]) => {
+    const stockFiles = Array.isArray(stockData) ? stockData : (stockData.files || []);
+    const latestStock = [...stockFiles].sort().reverse()[0];
+    const medItems = Array.isArray(medData) ? medData : [];
+    const latestMed = medItems[0];
+
+    if (!latestStock && !latestMed) return;
+
+    const grid = document.getElementById('highlight-grid');
+    const panel = document.getElementById('today-highlight');
+    let html = '';
+
+    if (latestStock) {
+      const date = latestStock.replace('.json', '').replace('.html', '');
+      html += `
+        <div class="highlight-card">
+          <div class="highlight-badge">NEW</div>
+          <a href="./stocks/viewer.html?d=${date}" style="text-decoration:none;color:inherit;display:block;">
+            <div class="card">
+              <div class="card-header"><div class="card-tag">每日摘要</div><div class="card-date">${date}</div></div>
+              <div class="card-title">股市摘要 — ${date}</div>
+              <div class="card-rule"></div>
+              <div class="card-excerpt">台股美股每日重點事件整理，掌握市場動態。</div>
+              <div class="card-read" style="margin-top:14px;">閱讀全文 <span class="arrow">→</span></div>
+            </div>
+          </a>
+        </div>`;
+    }
+
+    if (latestMed) {
+      const key = latestMed.filename.replace('.json', '');
+      const icon = DEPT_MAP[latestMed.department] || '📋';
+      html += `
+        <div class="highlight-card">
+          <div class="highlight-badge">NEW</div>
+          <a href="./medical/viewer.html?d=${encodeURIComponent(key)}" style="text-decoration:none;color:inherit;display:block;">
+            <div class="card">
+              <div class="card-header"><div class="card-tag">${icon} ${latestMed.department}</div><div class="card-date">${latestMed.pub_date || latestMed.date}</div></div>
+              <div class="card-title">${latestMed.summary || latestMed.title_zh || ''}</div>
+              <div class="card-rule"></div>
+              <div class="card-excerpt">${latestMed.title_zh || ''}</div>
+              <div class="card-header" style="margin-top:14px;margin-bottom:0;">
+                <div class="card-read">閱讀全文 <span class="arrow">→</span></div>
+                <div class="card-stars"><span class="star-filled">${'★'.repeat(latestMed.stars||0)}</span><span class="star-empty">${'☆'.repeat(5-(latestMed.stars||0))}</span></div>
+              </div>
+            </div>
+          </a>
+        </div>`;
+    }
+
+    grid.innerHTML = html;
+    panel.style.display = '';
+  }).catch(() => {});
 </script>
 
 <button id="back-to-top" aria-label="回到頂部" title="回到頂部">↑</button>
