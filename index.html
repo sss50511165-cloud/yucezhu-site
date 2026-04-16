@@ -374,7 +374,7 @@
 
       items.forEach((item, i) => {
         const key = item.filename.replace('.json', '');
-        const stars = '★'.repeat(item.stars || 0) + '☆'.repeat(5 - (item.stars || 0));
+        const stars = `<span class="star-filled">${'★'.repeat(item.stars || 0)}</span><span class="star-empty">${'☆'.repeat(5 - (item.stars || 0))}</span>`;
         const icon = DEPT_MAP[item.department] || '🏥';
         const li = document.createElement('li');
         li.style.animationDelay = `${0.3 + i * 0.15}s`;

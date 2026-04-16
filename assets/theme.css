@@ -9,13 +9,13 @@
 /* ── DESIGN TOKENS ── */
 :root {
   --bg-primary: #1a1511;
-  --bg-card: #0d0a06;
-  --bg-card-hover: #15110a;
+  --bg-card: #221c15;
+  --bg-card-hover: #2a231a;
   --border-color: rgba(201, 147, 91, 0.2);
   --border-hover: rgba(201, 147, 91, 0.5);
   --text-primary: #D2CCC4;
   --text-secondary: #ADA7A0;
-  --text-tertiary: #8C7B66;
+  --text-tertiary: #A08E78;
   --accent: #C9935B;
   --accent-light: #D9A676;
   --up: #6aad7a;
@@ -46,7 +46,7 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 999;
-  opacity: 0.4;
+  opacity: 0.12;
 }
 
 /* ── SHARED NAV BAR (sub-pages) ── */
@@ -117,10 +117,9 @@ body::after {
 
 .site-nav .nav-back {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 13px;
-  font-style: italic;
+  font-size: 14px;
   letter-spacing: 0.08em;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -148,10 +147,10 @@ body::after {
 
 .kicker-zh {
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 300;
   letter-spacing: 3px;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   margin-top: 4px;
 }
 
@@ -201,8 +200,7 @@ body::after {
 .card-date {
   font-family: 'Cormorant Garamond', serif;
   font-size: 13px;
-  font-style: italic;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
 }
 
 .card-title {
@@ -382,7 +380,7 @@ body::after {
   font-size: 10px;
   font-style: italic;
   letter-spacing: 3px;
-  color: #4A4035;
+  color: #8e7c66;
   text-transform: uppercase;
 }
 
@@ -489,9 +487,9 @@ body::after {
   font-size: 12px;
   font-style: italic;
   letter-spacing: 1px;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   background: var(--bg-card);
-  border: 0.5px solid var(--border-color);
+  border: 0.5px solid rgba(201, 147, 91, 0.35);
   border-radius: 2px;
   padding: 4px 12px;
 }
@@ -609,6 +607,16 @@ body::after {
   font-size: 18px;
   font-weight: 400;
   color: var(--accent);
+}
+
+/* ── STAR RATINGS ── */
+.star-filled {
+  color: var(--accent);
+}
+
+.star-empty {
+  color: var(--accent);
+  opacity: 0.25;
 }
 
 /* ── STOCK-SPECIFIC: INDEX CARDS ── */

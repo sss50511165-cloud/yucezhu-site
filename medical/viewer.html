@@ -180,7 +180,7 @@
 
   function stars(n) {
     n = n || 0;
-    return '★'.repeat(n) + '☆'.repeat(Math.max(0, 5 - n));
+    return `<span class="star-filled">${'★'.repeat(n)}</span><span class="star-empty">${'☆'.repeat(Math.max(0, 5 - n))}</span>`;
   }
 
   function render(d) {
