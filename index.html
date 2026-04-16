@@ -120,14 +120,14 @@
   .main-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 64px 40px 80px;
+    padding: 72px 40px 80px;
   }
 
   /* ── DUAL COLUMNS ── */
   .dual {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 48px;
+    gap: 56px;
     align-items: start;
   }
 
@@ -177,7 +177,7 @@
   .card-list {
     list-style: none;
     display: grid;
-    gap: 16px;
+    gap: 20px;
   }
 
   .card-list li {
@@ -238,12 +238,47 @@
 
     .dual {
       grid-template-columns: 1fr;
-      gap: 48px;
+      gap: 56px;
     }
   }
 </style>
 </head>
 <body>
+
+<button id="theme-toggle" aria-label="切換明暗模式" style="
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  background: var(--bg-card);
+  border: 0.5px solid var(--border-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--accent);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+" onclick="
+  const t = document.documentElement.dataset.theme === 'light' ? '' : 'light';
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('theme', t);
+  this.textContent = t === 'light' ? '🌙' : '☀️';
+">☀️</button>
+<script>
+  (function(){
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      document.documentElement.dataset.theme = saved;
+      const btn = document.getElementById('theme-toggle');
+      if (btn) btn.textContent = saved === 'light' ? '🌙' : '☀️';
+    }
+  })();
+</script>
 
 <!-- ── HERO BANNER ── -->
 <div class="hero-banner">

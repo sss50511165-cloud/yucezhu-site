@@ -8,19 +8,39 @@
 
 /* ── DESIGN TOKENS ── */
 :root {
-  --bg-primary: #1a1511;
-  --bg-card: #221c15;
-  --bg-card-hover: #2a231a;
-  --border-color: rgba(201, 147, 91, 0.2);
+  --bg-primary: #141414;
+  --bg-card: #1e1e1e;
+  --bg-card-hover: #262626;
+  --bg-surface: #1a1a1a;
+  --border-color: rgba(201, 147, 91, 0.25);
   --border-hover: rgba(201, 147, 91, 0.5);
-  --text-primary: #D2CCC4;
-  --text-secondary: #B8B2AB;
+  --text-primary: #E8E4E0;
+  --text-secondary: #C2BCB5;
   --text-tertiary: #A08E78;
   --accent: #C9935B;
   --accent-light: #D9A676;
   --up: #6aad7a;
   --down: #c47258;
   --warn: #d4b156;
+}
+
+/* ── LIGHT MODE ── */
+[data-theme="light"] {
+  --bg-primary: #F5F2EE;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAF8F5;
+  --bg-surface: #EDE9E3;
+  --border-color: rgba(160, 130, 100, 0.2);
+  --border-hover: rgba(160, 130, 100, 0.4);
+  --text-primary: #2C2520;
+  --text-secondary: #5A5148;
+  --text-tertiary: #8A7D6F;
+  --accent: #A17742;
+  --accent-light: #B8894F;
+}
+
+[data-theme="light"] body::after {
+  opacity: 0.03;
 }
 
 /* ── RESET ── */
@@ -32,8 +52,8 @@ body {
   color: var(--text-primary);
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-weight: 400;
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.85;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -167,7 +187,7 @@ body::after {
   background: var(--bg-card);
   border: 0.5px solid var(--border-color);
   border-radius: 4px;
-  padding: 28px;
+  padding: 32px;
   transition: background 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
               border-color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
               transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -208,7 +228,7 @@ body::after {
 
 .card-title {
   font-family: 'Playfair Display', 'LXGW WenKai TC', 'Noto Serif TC', serif;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 500;
   color: var(--text-primary);
   line-height: 1.5;
@@ -230,7 +250,7 @@ body::after {
   width: 24px;
   height: 1px;
   background: var(--accent);
-  margin: 14px 0;
+  margin: 18px 0;
   transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
@@ -240,9 +260,9 @@ body::after {
 
 .card-excerpt {
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.9;
+  line-height: 2.0;
   color: var(--text-secondary);
 }
 
@@ -292,7 +312,7 @@ body::after {
 }
 
 .section-body {
-  padding: 24px;
+  padding: 28px;
 }
 
 /* ── ACCENT BAR ── */
@@ -427,7 +447,7 @@ body::after {
 
 .info-table td {
   padding: 12px 0;
-  font-size: 15px;
+  font-size: 16px;
   vertical-align: top;
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-weight: 400;
@@ -456,15 +476,15 @@ body::after {
 .point-list {
   list-style: none;
   display: grid;
-  gap: 12px;
+  gap: 16px;
 }
 
 .point-item {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   align-items: flex-start;
-  font-size: 16px;
-  line-height: 2.0;
+  font-size: 17px;
+  line-height: 2.15;
   color: var(--text-primary);
   font-family: 'LXGW WenKai TC', 'Noto Serif TC', serif;
   font-weight: 400;
@@ -671,20 +691,20 @@ body::after {
   }
 
   .section-body {
-    padding: 18px;
+    padding: 20px;
   }
 
   .info-table td:first-child {
     width: 90px;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .card-title {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .card-excerpt {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .kicker-en {
@@ -692,10 +712,10 @@ body::after {
   }
 
   .point-item {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .info-table td {
-    font-size: 14px;
+    font-size: 15px;
   }
 }
