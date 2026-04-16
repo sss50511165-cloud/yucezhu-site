@@ -4,102 +4,307 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>股市摘要 · 雲端知識誌</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-:root{--bg:#08090d;--surface:#0f1117;--surface2:#161820;--border:#1e2130;--gold:#c9a84c;--gold-dim:rgba(201,168,76,0.09);--gold-dim2:rgba(201,168,76,0.16);--up:#3dd68c;--down:#f0644a;--warn:#f5c842;--text:#e8e9ef;--muted:#6b7190;--dim:#2a2d40}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;font-size:15px;line-height:1.7;min-height:100vh}
-.wrap{max-width:680px;margin:0 auto;padding:0 0 72px}
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 0 72px;
+    position: relative;
+    z-index: 1;
+  }
 
-/* TOPBAR */
-.topbar{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.topbar-logo{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--gold);text-decoration:none}
-.topbar-back{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s}
-.topbar-back:hover{color:var(--gold)}
+  /* HERO */
+  .hero {
+    padding: 28px 24px 20px;
+    border-bottom: 0.5px solid var(--border-color);
+  }
 
-/* HERO */
-.hero{padding:28px 20px 20px;border-bottom:1px solid var(--border)}
-.hero-date{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
-.hero-summary{font-size:16px;font-weight:500;color:var(--text);line-height:1.6;padding-left:14px;border-left:3px solid var(--gold)}
+  .hero-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
 
-/* SECTION */
-.section{padding:24px 20px 0}
-.label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.label::after{content:'';flex:1;height:1px;background:var(--border)}
+  .hero-summary {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-primary);
+    line-height: 1.7;
+    padding-left: 16px;
+    border-left: 2px solid var(--accent);
+  }
 
-/* INDICES */
-.index-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.idx{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:12px 14px}
-.idx-name{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
-.idx-val{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600}
-.up{color:var(--up)}.down{color:var(--down)}.neutral{color:var(--muted)}
+  /* SECTION */
+  .section {
+    padding: 28px 24px 0;
+  }
 
-/* TW */
-.tw-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:18px}
-.tw-big{font-family:'IBM Plex Mono',monospace;font-size:36px;font-weight:600;line-height:1}
-.tw-pts{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin-top:4px;margin-bottom:10px}
-.tw-note{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:12px}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{font-size:12px;color:var(--gold);border:1px solid var(--gold-dim2);border-radius:2px;padding:3px 10px;background:var(--gold-dim)}
+  .label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-/* EVENTS */
-.events{display:grid;gap:0}
-.event-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}
-.event-item:last-child{border-bottom:none}
-.event-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;margin-top:2px}
-.event-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px}
-.event-detail{font-size:12px;color:var(--muted);line-height:1.65}
-.event-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);margin-top:5px}
+  .label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border-color);
+  }
 
-/* RISKS */
-.risk-list,.obs-list{list-style:none;display:grid;gap:8px}
-.risk-list li{padding:12px 15px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--warn);border-radius:0 3px 3px 0;font-size:13px;color:var(--muted);line-height:1.7}
-.obs-list li{padding:12px 15px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--dim);border-radius:0 3px 3px 0;font-size:13px;color:var(--muted);line-height:1.7}
+  /* INDICES */
+  .index-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
 
-/* FOOTER */
-footer{margin-top:48px;padding:16px 20px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
-.footer-sources{display:flex;flex-wrap:wrap;gap:6px}
-.src-chip{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--border);border-radius:2px;padding:3px 8px}
-.footer-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim)}
+  .idx {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-color);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
 
-/* ERROR / LOADING */
-.state-msg{padding:60px 20px;text-align:center;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em}
-.loading-dot{display:inline-block;width:6px;height:6px;background:var(--gold);border-radius:50%;margin-right:8px;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.loaded{animation:fadeUp .5s ease both}
+  .idx-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    font-style: italic;
+    letter-spacing: 2px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
 
-@media(max-width:480px){
-  .index-row{grid-template-columns:1fr 1fr}
-  .topbar,.section{padding-left:16px;padding-right:16px}
-  .hero{padding:20px 16px}
-}
+  .idx-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  /* TW */
+  .tw-card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-color);
+    border-radius: 4px;
+    padding: 20px;
+  }
+
+  .tw-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .tw-pts {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+    margin-bottom: 12px;
+  }
+
+  .tw-note {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--accent);
+    border: 0.5px solid rgba(201, 147, 91, 0.25);
+    border-radius: 2px;
+    padding: 3px 12px;
+    background: rgba(201, 147, 91, 0.06);
+  }
+
+  /* EVENTS */
+  .events { display: grid; gap: 0; }
+
+  .event-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 0.5px solid var(--border-color);
+  }
+
+  .event-item:last-child { border-bottom: none; }
+
+  .event-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  .event-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .event-detail {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .event-meta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  /* RISKS */
+  .risk-list, .obs-list {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+
+  .risk-list li {
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-color);
+    border-left: 2px solid var(--warn);
+    border-radius: 0 4px 4px 0;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .obs-list li {
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border-color);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  .tmpl-footer {
+    margin-top: 48px;
+    padding: 18px 24px;
+    border-top: 0.5px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .footer-sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .src-chip {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+    border: 0.5px solid var(--border-color);
+    border-radius: 2px;
+    padding: 3px 10px;
+  }
+
+  .footer-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--text-tertiary);
+    letter-spacing: 1px;
+  }
+
+  .state-msg {
+    padding: 60px 24px;
+    text-align: center;
+    color: var(--text-tertiary);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  .loaded {
+    animation: fadeUp 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  }
+
+  @media (max-width: 480px) {
+    .index-row { grid-template-columns: 1fr 1fr; }
+    .section { padding-left: 16px; padding-right: 16px; }
+    .hero { padding: 20px 16px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<div class="topbar">
-  <a class="topbar-logo" href="/yucezhu-site/">雲端知識誌</a>
-  <a class="topbar-back" href="./index.html">← 返回股市列表</a>
-</div>
+<nav class="site-nav" style="padding: 0 24px;">
+  <a class="nav-logo" href="../">
+    <div class="nav-logo-mark"><span>誌</span></div>
+    <div class="nav-logo-title">
+      <span class="t-zh">雲端</span>
+      <span class="t-brand">知識誌</span>
+    </div>
+  </a>
+  <a class="nav-back" href="./index.html">← 返回股市列表</a>
+</nav>
 
 <div id="app">
-  <div class="state-msg"><span class="loading-dot"></span>載入中...</div>
+  <div class="state-msg"><span class="loading-dot" style="display:inline-block;margin-right:8px;"></span>載入中...</div>
 </div>
 
 </div>
 
 <script>
-// 從 URL 取得日期參數
-// 支援兩種格式：
-//   /stocks/template.html?date=2026-04-09
-//   /stocks/2026-04-09  （Netlify rewrite，進階用）
 const params = new URLSearchParams(window.location.search);
 let date = params.get('date');
 
-// 若沒有 date 參數，從路徑推斷（如直接放成 /stocks/2026-04-09.html 的情境）
 if (!date) {
   const pathMatch = window.location.pathname.match(/(\d{4}-\d{2}-\d{2})/);
   if (pathMatch) date = pathMatch[1];
@@ -107,7 +312,7 @@ if (!date) {
 
 if (!date) {
   document.getElementById('app').innerHTML =
-    '<div class="state-msg">❌ 缺少日期參數<br><small>網址應為 ?date=YYYY-MM-DD</small></div>';
+    '<div class="state-msg">缺少日期參數<br><small style="color:var(--text-tertiary)">網址應為 ?date=YYYY-MM-DD</small></div>';
 } else {
   document.title = `股市摘要 ${date} · 雲端知識誌`;
   fetch(`/stocks/${date}.json`)
@@ -115,16 +320,16 @@ if (!date) {
     .then(render)
     .catch(() => {
       document.getElementById('app').innerHTML =
-        `<div class="state-msg">❌ 找不到 ${date} 的摘要資料</div>`;
+        `<div class="state-msg">找不到 ${date} 的摘要資料</div>`;
     });
 }
 
 function cls(val) {
-  if (!val) return 'neutral';
+  if (!val) return '';
   const s = val.toString();
   if (s.startsWith('+') || s.startsWith('▲')) return 'up';
   if (s.startsWith('-') || s.startsWith('▼')) return 'down';
-  return 'neutral';
+  return '';
 }
 
 function render(d) {
@@ -150,7 +355,7 @@ function render(d) {
     <div class="loaded">
 
     <div class="hero">
-      <div class="hero-date">📅 ${d.date || date} · 股市摘要</div>
+      <div class="hero-date">${d.date || date} · 股市摘要</div>
       <div class="hero-summary">${d.summary || ''}</div>
     </div>
 
@@ -200,10 +405,10 @@ function render(d) {
       <ul class="obs-list">${tomorrow}</ul>
     </div>` : ''}
 
-    <footer>
+    <div class="tmpl-footer">
       <div class="footer-sources">${sources}</div>
       <div class="footer-time">產出：${d.generated || date}</div>
-    </footer>
+    </div>
 
     </div>`;
 }

@@ -4,336 +4,178 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>醫學新知 — 雲端知識誌</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-  :root {
-    --bg: #08090d;
-    --surface: #0f1117;
-    --surface2: #13151f;
-    --border: #1a1d2c;
-    --border2: #252840;
-    --teal: #3db8a8;
-    --teal-light: #5dd4c4;
-    --teal-dim: rgba(61,184,168,0.08);
-    --teal-dim2: rgba(61,184,168,0.15);
-    --gold: #c9a84c;
-    --up: #3dd68c;
-    --text: #e2e4f0;
-    --muted: #5a6080;
-    --dim: #2a2d40;
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding: 64px 40px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+    animation: fadeUp 0.7s 0.1s cubic-bezier(0.25, 0.1, 0.25, 1) both;
   }
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  .page-hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans TC', sans-serif;
+  .page-hero h1 .t-main {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .page-hero h1 .t-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .page-hero-sub {
+    margin-top: 16px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
     font-weight: 300;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.5;
-  }
-
-  /* ── HEADER ── */
-  header {
-    padding: 0 32px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-    animation: fadeDown 0.6s ease both;
-  }
-
-  .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-  .logo-mark {
-    width: 32px; height: 32px;
-    border: 1px solid var(--gold);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-  }
-  .logo-mark::before {
-    content: '';
-    position: absolute; inset: 3px;
-    background: rgba(201,168,76,0.15);
-  }
-  .logo-mark span {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; font-weight: 600;
-    color: var(--gold); position: relative;
-  }
-  .logo-text {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px; color: var(--text);
-  }
-
-  .back-nav {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    display: flex; align-items: center; gap: 6px;
-    transition: color 0.2s;
-  }
-  .back-nav:hover { color: var(--teal); }
-
-  /* ── HERO ── */
-  .hero {
-    padding: 64px 32px 48px;
-    max-width: 1100px; margin: 0 auto;
-    animation: fadeUp 0.7s 0.1s ease both;
-  }
-  .hero-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--teal);
-    margin-bottom: 20px;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--teal); }
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(36px, 5vw, 60px);
-    line-height: 1.1; font-weight: 400;
-    color: var(--text); max-width: 600px;
-  }
-  .hero h1 em { font-style: italic; color: var(--teal); }
-  .hero-sub {
-    margin-top: 16px; font-size: 14px;
-    color: var(--muted); line-height: 1.8; max-width: 420px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 440px;
   }
 
   /* ── MAIN LAYOUT ── */
   .main {
-    max-width: 1100px; margin: 0 auto;
-    padding: 0 32px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 40px; align-items: start;
+    grid-template-columns: 1fr 280px;
+    gap: 48px;
+    align-items: start;
   }
 
-  .section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--teal);
-    margin-bottom: 20px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  /* ── MEDICAL LIST ── */
-  #medical-list { list-style: none; display: grid; gap: 2px; }
-
-  #medical-list li {
-    opacity: 0; transform: translateY(8px);
-    animation: fadeUp 0.4s ease forwards;
+  /* ── CARD LIST ── */
+  .med-list {
+    list-style: none;
+    display: grid;
+    gap: 14px;
   }
 
-  #medical-list a {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 20px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    text-decoration: none; color: var(--text);
-    transition: border-color 0.2s, background 0.2s;
-    gap: 16px;
-  }
-  #medical-list a:hover { border-color: var(--teal); background: var(--teal-dim); }
-  #medical-list a:hover .entry-arrow { transform: translateX(4px); color: var(--teal); }
-
-  .entry-left { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; }
-
-  .entry-date-badge {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.08em;
-    color: var(--muted); background: var(--surface2);
-    border: 1px solid var(--border); border-radius: 2px;
-    padding: 4px 10px; white-space: nowrap;
-    min-width: 96px; text-align: center;
+  .med-list li {
+    opacity: 0;
+    animation: fadeUp 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
   }
 
-  .entry-dept {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--teal);
-    background: var(--teal-dim); border: 1px solid var(--teal-dim2);
-    border-radius: 2px; padding: 2px 8px; white-space: nowrap;
+  .med-list a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
   }
 
-  .entry-summary {
-    font-size: 13px; font-weight: 400;
-    color: var(--text); white-space: nowrap;
-    overflow: hidden; text-overflow: ellipsis;
-  }
-
-  .entry-stars {
-    font-size: 11px; color: var(--gold);
-    white-space: nowrap; flex-shrink: 0;
-  }
-
-  .entry-arrow {
-    font-size: 14px; color: var(--muted);
-    transition: transform 0.2s, color 0.2s; flex-shrink: 0;
-  }
-
-  .loading-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 20px; color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; letter-spacing: 0.1em;
-  }
-  .loading-dot {
-    width: 6px; height: 6px;
-    background: var(--teal); border-radius: 50%;
-    animation: blink 1s infinite;
-  }
-  .empty-state {
-    padding: 32px 20px; text-align: center;
-    color: var(--muted); font-size: 13px;
-    border: 1px dashed var(--border2); border-radius: 3px;
+  .card-stars {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
   }
 
   /* ── SIDEBAR ── */
-  .sidebar { display: grid; gap: 24px; animation: fadeUp 0.7s 0.3s ease both; }
-
-  .sidebar-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px; overflow: hidden;
-  }
-  .sidebar-card-head {
-    padding: 14px 18px; border-bottom: 1px solid var(--border);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--teal);
-  }
-  .sidebar-card-body { padding: 18px; }
-
-  .stat-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 8px 0; border-bottom: 1px solid var(--border);
-  }
-  .stat-row:last-child { border-bottom: none; }
-  .stat-label { font-size: 12px; color: var(--muted); }
-  .stat-val {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 16px; font-weight: 600; color: var(--teal);
+  .sidebar {
+    display: grid;
+    gap: 20px;
+    animation: fadeUp 0.7s 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) both;
   }
 
   .dept-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 0; border-bottom: 1px solid var(--border);
-    font-size: 13px; color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border-color);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px;
+    font-weight: 300;
   }
+
   .dept-item:last-child { border-bottom: none; }
+
   .dept-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--teal); margin-right: 10px; flex-shrink: 0;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 10px;
+    flex-shrink: 0;
   }
-  .dept-name { color: var(--text); flex: 1; }
+
+  .dept-name {
+    color: var(--text-primary);
+    flex: 1;
+  }
+
   .dept-count {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; color: var(--muted);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--text-tertiary);
+    letter-spacing: 1px;
   }
 
   .notice-box {
-    padding: 12px 14px;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    border-radius: 3px;
-    font-size: 11px; color: var(--muted); line-height: 1.8;
-  }
-
-  /* ── TEAL BAR ── */
-  .teal-bar {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--teal), transparent);
-    margin: 0 32px 40px; opacity: 0.3;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 20px 32px;
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 12px;
-  }
-  .footer-left, .footer-right {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.12em; color: var(--dim);
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
+    padding: 14px 16px;
+    background: rgba(212, 177, 86, 0.04);
+    border: 0.5px solid rgba(212, 177, 86, 0.12);
+    border-radius: 4px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-tertiary);
+    line-height: 1.9;
   }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    header { padding: 0 20px; }
-    .hero  { padding: 48px 20px 36px; }
-    .main  { grid-template-columns: 1fr; padding: 0 20px 60px; }
-    .teal-bar { margin: 0 20px 32px; }
-    footer { padding: 16px 20px; }
-    .entry-summary { display: none; }
+    .page-hero { padding: 48px 20px 36px; }
+    .main { grid-template-columns: 1fr; padding: 0 20px 60px; }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <a class="logo" href="/yucezhu-site/">
-    <div class="logo-mark"><span>誌</span></div>
-    <span class="logo-text">雲端知識誌</span>
+<!-- NAV -->
+<nav class="site-nav">
+  <a class="nav-logo" href="../">
+    <div class="nav-logo-mark"><span>誌</span></div>
+    <div class="nav-logo-title">
+      <span class="t-zh">雲端</span>
+      <span class="t-brand">知識誌</span>
+    </div>
   </a>
-  <a class="back-nav" href="/yucezhu-site/">← 返回首頁</a>
-</header>
+  <a class="nav-back" href="../">← 返回首頁</a>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">Medicine · Daily Update</div>
-  <h1>內科<br><em>醫學新知</em></h1>
-  <p class="hero-sub">每日自動整理 PubMed 最新文獻，<br>聚焦臨床價值，由 AI 摘要，需人工校對。</p>
+<div class="page-hero">
+  <div class="kicker">
+    <div class="kicker-en">Medical Pulse</div>
+    <div class="kicker-zh">臨床動態</div>
+    <div class="kicker-line"></div>
+  </div>
+  <h1><span class="t-main">內科</span><br><span class="t-brand">醫學新知</span></h1>
+  <p class="page-hero-sub">每日自動整理 PubMed 最新文獻，<br>聚焦臨床價值，由 AI 摘要，需人工校對。</p>
 </div>
 
-<div class="teal-bar"></div>
+<div class="accent-bar" style="margin: 0 40px 40px;"></div>
 
 <!-- MAIN -->
 <div class="main">
 
   <!-- LIST -->
   <section>
-    <div class="section-label">內科新知 · 每日更新</div>
-    <ul id="medical-list">
-      <li>
-        <div class="loading-row">
-          <div class="loading-dot"></div>
-          <span>載入中...</span>
-        </div>
-      </li>
+    <div class="kicker" style="margin-bottom: 20px;">
+      <div class="kicker-en">All Articles</div>
+      <div class="kicker-line"></div>
+    </div>
+    <ul class="med-list" id="medical-list">
+      <li><div class="loading-row"><div class="loading-dot"></div><span>載入中...</span></div></li>
     </ul>
   </section>
 
@@ -342,7 +184,7 @@
 
     <!-- STATS -->
     <div class="sidebar-card">
-      <div class="sidebar-card-head">統計</div>
+      <div class="sidebar-card-head">Statistics</div>
       <div class="sidebar-card-body">
         <div class="stat-row">
           <span class="stat-label">已收錄文獻</span>
@@ -350,16 +192,16 @@
         </div>
         <div class="stat-row">
           <span class="stat-label">最新更新</span>
-          <span class="stat-val" id="stat-latest" style="font-size:11px">—</span>
+          <span class="stat-val" id="stat-latest" style="font-size:12px">—</span>
         </div>
       </div>
     </div>
 
     <!-- DEPT -->
     <div class="sidebar-card">
-      <div class="sidebar-card-head">科別輪替</div>
+      <div class="sidebar-card-head">Departments</div>
       <div class="sidebar-card-body">
-        <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">心臟科</span><span class="dept-count">日期 mod 5 = 0</span></div>
+        <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">心臟科</span><span class="dept-count">mod 5 = 0</span></div>
         <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">內分泌科</span><span class="dept-count">mod 5 = 1</span></div>
         <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">感染科</span><span class="dept-count">mod 5 = 2</span></div>
         <div class="dept-item"><div class="dept-dot"></div><span class="dept-name">腎臟科</span><span class="dept-count">mod 5 = 3</span></div>
@@ -369,10 +211,10 @@
 
     <!-- NOTICE -->
     <div class="sidebar-card">
-      <div class="sidebar-card-head">使用注意</div>
+      <div class="sidebar-card-head">Notice</div>
       <div class="sidebar-card-body">
         <div class="notice-box">
-          ⚠️ 所有文獻由 AI 整理，中文翻譯需人工校對。<br><br>
+          所有文獻由 AI 整理，中文翻譯需人工校對。<br><br>
           Impact Factor 請至 JCR 手動查詢。<br><br>
           本站內容僅供參考，非醫療建議。
         </div>
@@ -383,9 +225,9 @@
 </div>
 
 <!-- FOOTER -->
-<footer>
+<footer class="site-footer">
   <div class="footer-left">© 2026 雲端知識誌 · 每日自動更新</div>
-  <div class="footer-right">POWERED BY CLAUDE · HOSTED ON GITHUB PAGES</div>
+  <div class="footer-right">Powered by Claude · Hosted on GitHub Pages</div>
 </footer>
 
 <script>
@@ -418,16 +260,22 @@
         const stars = '★'.repeat(item.stars || 0) + '☆'.repeat(5 - (item.stars || 0));
         const icon = DEPT_MAP[item.department] || '🏥';
         const li = document.createElement('li');
-        li.style.animationDelay = `${i * 60}ms`;
+        li.style.animationDelay = `${i * 0.08}s`;
         li.innerHTML = `
           <a href="./viewer.html?d=${encodeURIComponent(key)}">
-            <div class="entry-left">
-              <span class="entry-date-badge">${item.pub_date || item.date}</span>
-              <span class="entry-dept">${icon} ${item.department}</span>
-              <span class="entry-summary">${item.summary || item.title_zh || ''}</span>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-tag">${icon} ${item.department}</div>
+                <div class="card-date">${item.pub_date || item.date}</div>
+              </div>
+              <div class="card-title">${item.summary || item.title_zh || ''}</div>
+              <div class="card-rule"></div>
+              <div class="card-excerpt">${item.title_zh || ''}</div>
+              <div class="card-header" style="margin-top:14px; margin-bottom:0;">
+                <div class="card-read">閱讀全文 <span class="arrow">→</span></div>
+                <div class="card-stars">${stars}</div>
+              </div>
             </div>
-            <span class="entry-stars">${stars}</span>
-            <span class="entry-arrow">→</span>
           </a>`;
         list.appendChild(li);
       });

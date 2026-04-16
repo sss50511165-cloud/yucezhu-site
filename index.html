@@ -1,391 +1,318 @@
-<!-- 雲端知識誌 v2.0 — 雙欄首頁 -->
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>雲端知識誌</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/theme.css">
 <style>
-  :root {
-    --bg: #08090d;
-    --surface: #0f1117;
-    --surface2: #13151f;
-    --border: #1a1d2c;
-    --border2: #252840;
-    --gold: #c9a84c;
-    --gold-light: #f0c96a;
-    --gold-dim: rgba(201,168,76,0.08);
-    --gold-dim2: rgba(201,168,76,0.15);
-    --teal: #3db8a8;
-    --teal-dim: rgba(61,184,168,0.08);
-    --teal-dim2: rgba(61,184,168,0.15);
-    --up: #3dd68c;
-    --text: #e2e4f0;
-    --muted: #5a6080;
-    --dim: #2a2d40;
-  }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 300;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.5;
-  }
-
-  /* ── HEADER ── */
-  header {
-    padding: 0 32px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-    animation: fadeDown 0.6s ease both;
-  }
-
-  .logo {
-    display: flex; align-items: center;
-    gap: 14px; text-decoration: none;
-  }
-  .logo-mark {
-    width: 32px; height: 32px;
-    border: 1px solid var(--gold);
-    display: flex; align-items: center; justify-content: center;
+  /* ── HERO BANNER ── */
+  .hero-banner {
     position: relative;
-  }
-  .logo-mark::before {
-    content: '';
-    position: absolute; inset: 3px;
-    background: var(--gold-dim2);
-  }
-  .logo-mark span {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; font-weight: 600;
-    color: var(--gold); position: relative;
-  }
-  .logo-text {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px; color: var(--text);
-    letter-spacing: 0.02em;
-  }
-  .header-right {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.15em;
-    color: var(--muted); text-transform: uppercase;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .live-pip {
-    width: 6px; height: 6px;
-    background: var(--up); border-radius: 50%;
-    animation: blink 2.4s infinite;
+    height: 480px;
+    overflow: hidden;
   }
 
-  /* ── HERO ── */
-  .hero {
-    padding: 64px 32px 48px;
-    max-width: 1200px; margin: 0 auto;
-    animation: fadeUp 0.7s 0.1s ease both;
-  }
-  .hero-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--gold);
-    margin-bottom: 20px;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    line-height: 1.08; font-weight: 400;
-    color: var(--text); max-width: 700px;
-  }
-  .hero h1 em { font-style: italic; color: var(--gold); }
-  .hero-sub {
-    margin-top: 18px; font-size: 14px;
-    color: var(--muted); line-height: 1.8; max-width: 520px;
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('./images/whale-header.webp') center right / cover no-repeat;
   }
 
-  .gold-bar {
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right,
+      rgba(10,8,4,0.92) 0%,
+      rgba(10,8,4,0.5) 50%,
+      transparent 80%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 8%;
+    max-width: 50%;
+  }
+
+  .hero-kicker {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0;
+    animation: slideInLeft 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0s forwards;
+  }
+
+  .hero-rule {
+    width: 32px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 0 32px 40px; opacity: 0.3;
+    background: var(--accent);
+    margin: 20px 0;
+    opacity: 0;
+    animation: slideInLeft 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s forwards;
+  }
+
+  .hero-title {
+    font-size: 56px;
+    line-height: 1.15;
+    margin: 0;
+    opacity: 0;
+    animation: slideInLeft 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.4s forwards;
+  }
+
+  .hero-title .t-main {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: block;
+  }
+
+  .hero-title .t-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub-zh {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    margin-top: 22px;
+    opacity: 0;
+    animation: slideInLeft 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.6s forwards;
+  }
+
+  .hero-sub-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+    opacity: 0;
+    animation: slideInLeft 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.8s forwards;
+  }
+
+  .hero-vol {
+    position: absolute;
+    bottom: 28px;
+    right: 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    font-style: italic;
+    letter-spacing: 3px;
+    color: rgba(232, 221, 200, 0.3);
+    z-index: 1;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 40px 80px;
   }
 
   /* ── DUAL COLUMNS ── */
   .dual {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px 80px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: 48px;
     align-items: start;
   }
 
-  /* ── COLUMN CARD ── */
-  .col-card {
-    animation: fadeUp 0.7s ease both;
+  .column-section {
+    opacity: 0;
+    animation: fadeUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
   }
-  .col-card:nth-child(2) { animation-delay: 0.1s; }
 
-  .col-header {
-    display: flex; align-items: center;
+  .column-section:nth-child(1) { animation-delay: 0.2s; }
+  .column-section:nth-child(2) { animation-delay: 0.35s; }
+
+  /* ── SECTION HEADER ── */
+  .section-top {
+    display: flex;
+    align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 32px;
   }
 
-  .col-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.2em;
-    text-transform: uppercase;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .col-title.stock-theme { color: var(--gold); }
-  .col-title.med-theme   { color: var(--teal); }
-
-  .col-title::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-  }
-  .col-title.stock-theme::before { background: var(--gold); }
-  .col-title.med-theme::before   { background: var(--teal); }
-
-  .col-more {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.12em;
-    text-transform: uppercase;
+  .section-more {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    letter-spacing: 2px;
+    color: var(--text-tertiary);
     text-decoration: none;
-    display: flex; align-items: center; gap: 6px;
-    transition: color 0.2s;
-  }
-  .col-more.stock-theme { color: var(--muted); }
-  .col-more.stock-theme:hover { color: var(--gold); }
-  .col-more.med-theme   { color: var(--muted); }
-  .col-more.med-theme:hover   { color: var(--teal); }
-
-  .col-more .arrow-icon { transition: transform 0.2s; }
-  .col-more:hover .arrow-icon { transform: translateX(3px); }
-
-  /* ── ENTRY LIST ── */
-  .entry-list { list-style: none; display: grid; gap: 2px; }
-
-  .entry-list li {
-    opacity: 0; transform: translateY(8px);
-    animation: fadeUp 0.4s ease forwards;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
-  .entry-list a {
-    display: flex; align-items: center;
+  .section-more:hover {
+    color: var(--accent);
+  }
+
+  .section-more .arrow {
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .section-more:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* ── CARD LIST ── */
+  .card-list {
+    list-style: none;
+    display: grid;
+    gap: 16px;
+  }
+
+  .card-list li {
+    opacity: 0;
+    animation: fadeUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  }
+
+  .card-list a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 14px 18px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    text-decoration: none; color: var(--text);
-    transition: border-color 0.2s, background 0.2s;
-    gap: 14px;
-  }
-  .entry-list.stock-theme a:hover { border-color: var(--gold); background: var(--gold-dim); }
-  .entry-list.stock-theme a:hover .entry-arrow { transform: translateX(4px); color: var(--gold); }
-  .entry-list.med-theme a:hover { border-color: var(--teal); background: var(--teal-dim); }
-  .entry-list.med-theme a:hover .entry-arrow { transform: translateX(4px); color: var(--teal); }
-
-  .entry-left {
-    display: flex; align-items: center;
-    gap: 12px; flex: 1; min-width: 0;
+    margin-bottom: 8px;
   }
 
-  .entry-date-badge {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.08em;
-    color: var(--muted); background: var(--surface2);
-    border: 1px solid var(--border); border-radius: 2px;
-    padding: 3px 8px; white-space: nowrap;
-    min-width: 88px; text-align: center;
-  }
-
-  .entry-title {
-    font-size: 13px; font-weight: 400;
-    color: var(--text);
-    white-space: nowrap; overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .entry-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border-radius: 2px; padding: 2px 7px;
-    white-space: nowrap; flex-shrink: 0;
-  }
-  .entry-tag.stock-tag {
-    color: var(--gold); background: var(--gold-dim);
-    border: 1px solid var(--gold-dim2);
-  }
-  .entry-tag.med-tag {
-    color: var(--teal); background: var(--teal-dim);
-    border: 1px solid var(--teal-dim2);
-  }
-
-  .entry-stars {
-    font-size: 10px; color: var(--gold);
-    white-space: nowrap; flex-shrink: 0;
-  }
-
-  .entry-arrow {
-    font-size: 13px; color: var(--muted);
-    transition: transform 0.2s, color 0.2s; flex-shrink: 0;
-  }
-
-  .loading-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 20px; color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; letter-spacing: 0.1em;
-  }
-  .loading-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    animation: blink 1s infinite;
-  }
-  .loading-dot.gold { background: var(--gold); }
-  .loading-dot.teal { background: var(--teal); }
-
-  .empty-state {
-    padding: 24px 18px; text-align: center;
-    color: var(--muted); font-size: 13px;
-    border: 1px dashed var(--border2); border-radius: 3px;
+  .card-stars {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
   }
 
   /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 20px 32px;
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 12px;
-    animation: fadeUp 0.7s 0.4s ease both;
-  }
-  .footer-left, .footer-right {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.12em; color: var(--dim);
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
+  .index-footer {
+    margin-top: 0;
   }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
-    .dual { grid-template-columns: 1fr; }
-    header { padding: 0 20px; }
-    .hero  { padding: 48px 20px 36px; }
-    .dual  { padding: 0 20px 60px; }
-    .gold-bar { margin: 0 20px 32px; }
-    footer { padding: 16px 20px; }
+    .hero-banner {
+      height: 320px;
+    }
+
+    .hero-content {
+      padding-left: 24px;
+      max-width: 80%;
+    }
+
+    .hero-title {
+      font-size: 36px;
+    }
+
+    .hero-sub-zh {
+      font-size: 13px;
+    }
+
+    .hero-vol {
+      display: none;
+    }
+
+    .main-content {
+      padding: 40px 20px 60px;
+    }
+
+    .dual {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <a class="logo" href="/yucezhu-site/" onclick="event.preventDefault(); location.reload();">
-    <div class="logo-mark"><span>誌</span></div>
-    <span class="logo-text">雲端知識誌</span>
-  </a>
-  <div class="header-right">
-    <div class="live-pip"></div>
-    <span id="live-date">—</span>
+<!-- ── HERO BANNER ── -->
+<div class="hero-banner">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-kicker">Knowledge · Every Day</div>
+    <div class="hero-rule"></div>
+    <h1 class="hero-title">
+      <span class="t-main">雲端</span>
+      <span class="t-brand">知識誌</span>
+    </h1>
+    <p class="hero-sub-zh">整合每日財經與醫學新知</p>
+    <p class="hero-sub-en">Where market pulses meet medical wisdom.</p>
   </div>
-</header>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">Knowledge · Every Day</div>
-  <h1>雲端<br><em>知識誌</em></h1>
-  <p class="hero-sub">整合每日財經與醫學新知，<br>AI 自動整理，簡潔閱讀，快速掌握重要動態。</p>
+  <div class="hero-vol">MMXXVI · VOL. I</div>
 </div>
 
-<div class="gold-bar"></div>
+<!-- ── MAIN CONTENT ── -->
+<div class="main-content">
 
-<!-- DUAL COLUMNS -->
-<div class="dual">
+  <div class="accent-bar" style="margin-bottom: 56px;"></div>
 
-  <!-- ── 股市區 ── -->
-  <div class="col-card">
-    <div class="col-header">
-      <div class="col-title stock-theme">股市摘要 · 每日更新</div>
-      <a class="col-more stock-theme" href="./stocks/index.html">
-        查看全部 <span class="arrow-icon">→</span>
-      </a>
+  <div class="dual">
+
+    <!-- ── STOCKS ── -->
+    <div class="column-section">
+      <div class="section-top">
+        <div class="kicker">
+          <div class="kicker-en">Market Briefing</div>
+          <div class="kicker-zh">市場脈動</div>
+          <div class="kicker-line"></div>
+        </div>
+        <a class="section-more" href="./stocks/index.html">
+          查看全部 <span class="arrow">→</span>
+        </a>
+      </div>
+      <ul class="card-list" id="stock-list">
+        <li><div class="loading-row"><div class="loading-dot"></div><span>載入中...</span></div></li>
+      </ul>
     </div>
-    <ul class="entry-list stock-theme" id="stock-list">
-      <li><div class="loading-row"><div class="loading-dot gold"></div><span>載入中...</span></div></li>
-    </ul>
-  </div>
 
-  <!-- ── 醫學區 ── -->
-  <div class="col-card">
-    <div class="col-header">
-      <div class="col-title med-theme">內科醫學新知 · 每日更新</div>
-      <a class="col-more med-theme" href="./medical/index.html">
-        查看全部 <span class="arrow-icon">→</span>
-      </a>
+    <!-- ── MEDICAL ── -->
+    <div class="column-section">
+      <div class="section-top">
+        <div class="kicker">
+          <div class="kicker-en">Medical Pulse</div>
+          <div class="kicker-zh">臨床動態</div>
+          <div class="kicker-line"></div>
+        </div>
+        <a class="section-more" href="./medical/index.html">
+          查看全部 <span class="arrow">→</span>
+        </a>
+      </div>
+      <ul class="card-list" id="med-list">
+        <li><div class="loading-row"><div class="loading-dot"></div><span>載入中...</span></div></li>
+      </ul>
     </div>
-    <ul class="entry-list med-theme" id="med-list">
-      <li><div class="loading-row"><div class="loading-dot teal"></div><span>載入中...</span></div></li>
-    </ul>
-  </div>
 
+  </div>
 </div>
 
-<!-- FOOTER -->
-<footer>
+<!-- ── FOOTER ── -->
+<footer class="site-footer index-footer">
   <div class="footer-left">© 2026 雲端知識誌 · 每日自動更新</div>
-  <div class="footer-right">POWERED BY CLAUDE · HOSTED ON GITHUB PAGES</div>
+  <div class="footer-right">Powered by Claude · Hosted on GitHub Pages</div>
 </footer>
 
 <script>
-  // ── Live date ──
-  function updateDate() {
-    const now = new Date();
-    const tw = new Intl.DateTimeFormat('zh-TW', {
-      timeZone: 'Asia/Taipei',
-      year: 'numeric', month: '2-digit', day: '2-digit',
-      hour: '2-digit', minute: '2-digit'
-    }).format(now);
-    document.getElementById('live-date').textContent = tw;
-  }
-  updateDate();
-  setInterval(updateDate, 30000);
-
   const MAX_ITEMS = 5;
 
   // ── Stock list ──
@@ -405,15 +332,19 @@
       sorted.forEach((file, i) => {
         const date = file.replace('.json', '').replace('.html', '');
         const li = document.createElement('li');
-        li.style.animationDelay = `${i * 60}ms`;
+        li.style.animationDelay = `${0.3 + i * 0.15}s`;
         li.innerHTML = `
           <a href="./stocks/viewer.html?d=${date}">
-            <div class="entry-left">
-              <span class="entry-date-badge">${date}</span>
-              <span class="entry-title">股市摘要</span>
-              <span class="entry-tag stock-tag">每日</span>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-tag">每日摘要</div>
+                <div class="card-date">${date}</div>
+              </div>
+              <div class="card-title">股市摘要 — ${date}</div>
+              <div class="card-rule"></div>
+              <div class="card-excerpt">台股美股每日重點事件整理，掌握市場動態。</div>
+              <div class="card-read">閱讀全文 <span class="arrow">→</span></div>
             </div>
-            <span class="entry-arrow">→</span>
           </a>`;
         list.appendChild(li);
       });
@@ -446,16 +377,22 @@
         const stars = '★'.repeat(item.stars || 0) + '☆'.repeat(5 - (item.stars || 0));
         const icon = DEPT_MAP[item.department] || '🏥';
         const li = document.createElement('li');
-        li.style.animationDelay = `${i * 60}ms`;
+        li.style.animationDelay = `${0.3 + i * 0.15}s`;
         li.innerHTML = `
           <a href="./medical/viewer.html?d=${encodeURIComponent(key)}">
-            <div class="entry-left">
-              <span class="entry-date-badge">${item.pub_date || item.date}</span>
-              <span class="entry-tag med-tag">${icon} ${item.department}</span>
-              <span class="entry-title">${item.summary || item.title_zh || ''}</span>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-tag">${icon} ${item.department}</div>
+                <div class="card-date">${item.pub_date || item.date}</div>
+              </div>
+              <div class="card-title">${item.summary || item.title_zh || ''}</div>
+              <div class="card-rule"></div>
+              <div class="card-excerpt">${item.title_zh || ''}</div>
+              <div class="card-header" style="margin-top:14px; margin-bottom:0;">
+                <div class="card-read">閱讀全文 <span class="arrow">→</span></div>
+                <div class="card-stars">${stars}</div>
+              </div>
             </div>
-            <span class="entry-stars">${stars}</span>
-            <span class="entry-arrow">→</span>
           </a>`;
         list.appendChild(li);
       });
