@@ -1,0 +1,43 @@
+{
+  "date": "2026-04-17",
+  "time": "09:41",
+  "department": "感染科",
+  "summary": "RCT 證實新生兒敗血症 7 天抗生素不劣於 14 天",
+  "paper": {
+    "title_en": "7-days versus 14-days antibiotic therapy in uncomplicated culture proven neonatal sepsis: a randomized control assessor-blinded trial",
+    "title_zh": "非複雜性培養證實新生兒敗血症之 7 天與 14 天抗生素療程比較：隨機對照評估者盲試驗（AI 翻譯，請校對）",
+    "journal": "European Journal of Pediatrics",
+    "impact_factor": "請至 JCR 手動確認",
+    "published": "2026-04-15",
+    "pmid": "41984236",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41984236/"
+  },
+  "design": {
+    "type": "RCT",
+    "note": "平行分組、隨機、非劣效性、評估者盲試驗，於印度中部三級 NICU 執行，共 140 名新生兒（每組 70 人）"
+  },
+  "findings": [
+    "917 名疑似敗血症新生兒中，256 例培養陽性，排除腦膜炎、葡萄球菌及黴菌感染後，140 例於第 5 天改善並隨機分組",
+    "主要致病菌為 Klebsiella pneumoniae",
+    "7 天組住院天數較短、呼吸支持需求較低",
+    "兩組皆呈現低可能復發率，無死亡或確定性復發記錄",
+    "7 天抗生素療程對非複雜性新生兒敗血症不劣於 14 天療程"
+  ],
+  "clinical_points": [
+    "非複雜性培養陽性新生兒敗血症可考慮縮短抗生素療程至 7 天",
+    "縮短療程可減少住院天數與呼吸支持需求，降低醫療資源消耗",
+    "需排除 CNS 感染、敗血性關節炎及致命性先天畸形後方可適用"
+  ],
+  "keywords": ["neonatal sepsis", "antibiotic duration", "antimicrobial stewardship"],
+  "rating": {
+    "stars": 4,
+    "reason": "RCT 設計、明確非劣效性結論、樣本數足夠（140 例）、European Journal of Pediatrics 為兒科領域知名期刊"
+  },
+  "verification": {
+    "pmid_checked": true,
+    "title_matched": true,
+    "date_in_range": true
+  },
+  "source": ["PubMed"],
+  "generated": "2026-04-17 09:41"
+}
