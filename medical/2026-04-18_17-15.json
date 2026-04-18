@@ -1,0 +1,44 @@
+{
+  "date": "2026-04-18",
+  "time": "17:15",
+  "department": "腎臟科",
+  "summary": "NAC+牛磺酸輔助治療可改善早期CKD白蛋白尿",
+  "paper": {
+    "title_en": "The Efficacy and Safety of N-acetylcysteine and Taurine (Nefrosave) in Chronic Kidney Disease: A Double-Blind, Multicenter, Placebo-Controlled Trial (DELAY-CKD)",
+    "title_zh": "N-乙醯半胱氨酸與牛磺酸（Nefrosave）在慢性腎臟病中的療效與安全性：雙盲、多中心、安慰劑對照試驗（DELAY-CKD）（AI 翻譯，請校對）",
+    "journal": "Cureus",
+    "impact_factor": "請至 JCR 手動確認",
+    "published": "2026-03-11",
+    "pmid": "41994792",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41994792/"
+  },
+  "design": {
+    "type": "RCT",
+    "note": "雙盲、多中心、安慰劑對照試驗，100名CKD 1-3期患者隨機分組，180天介入期，80人納入療效分析"
+  },
+  "findings": [
+    "治療組尿白蛋白/肌酐比值（uACR）在第180天降低18.57%",
+    "微量白蛋白尿亞組降低34.09%（p=0.043，達統計顯著）",
+    "巨量白蛋白尿亞組降低19.34%",
+    "治療組胱抑素C降低21.46%，較安慰劑組多降39.17%（p=0.079）",
+    "治療組血清肌酐僅上升0.03 mg/dL（1.78%），安慰劑組上升0.19 mg/dL（11.52%）",
+    "早期CKD（1-2期）亞組相對降幅達27.43%"
+  ],
+  "clinical_points": [
+    "NAC+牛磺酸輔助標準治療在微量白蛋白尿及早期CKD患者中顯示顯著的白蛋白尿改善",
+    "治療耐受性良好，僅5名治療組患者出現輕度不良事件",
+    "需要更大規模試驗進一步驗證此輔助治療策略的效果"
+  ],
+  "keywords": ["慢性腎臟病", "N-乙醯半胱氨酸", "白蛋白尿"],
+  "rating": {
+    "stars": 3,
+    "reason": "RCT設計但樣本量偏小（n=80）、發表於Cureus期刊、部分結果未達統計顯著"
+  },
+  "verification": {
+    "pmid_checked": true,
+    "title_matched": true,
+    "date_in_range": true
+  },
+  "source": ["PubMed"],
+  "generated": "2026-04-18 17:15"
+}
